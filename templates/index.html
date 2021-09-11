@@ -1,7 +1,7 @@
-Viestien määrä: {{ count }}
+Aihepiirien määrä: {{ count }}
 <hr>
-{% for message in messages %}
-{{ message.content }}
+{% for topicarea in topicareas %}
+{{ topicarea.name }}
 <hr>
 {% endfor %}
-<a href="/new">Lähetä viesti</a>
+<a href="/new">Lisää keskusteluaihe</a>
