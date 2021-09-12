@@ -1,7 +1,8 @@
-Aihepiirien määrä: {{ count }}
+Aihealueiden määrä: {{ count }}
 <hr>
 {% for topicarea in topicareas %}
 {{ topicarea.name }}
+<a href="/{{ topicarea.id}}">Go!</a>
 <hr>
 {% endfor %}
-<a href="/new">Lisää keskusteluaihe</a>
+<a href="/newtopicarea">Lisää Aihealue</a>
