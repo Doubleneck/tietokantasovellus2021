@@ -1,0 +1,9 @@
+Tämän keskustelun otsikko: {{ topicname}}
+<hr>
+
+{% for message in messages %}
+{{ message.content }}
+<a href="/{{ topicareaid }}">KESKEN...</a>
+<hr>
+{% endfor %}
+<a href="/{{ topicareaid }}/topic">Kommentoi tätä aihetta:</a>
