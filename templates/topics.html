@@ -1,0 +1,10 @@
+Keskustelujen määrä: {{ count }}
+Aihepiiri: {{ topicareaname }}
+<hr>
+
+{% for topic in topics %}
+{{ topic.name }}
+<a href="/{{ topic.id}}">Go!</a>
+<hr>
+{% endfor %}
+<a href="/{{ topicareaid }}/newtopic">Aloita uusi keskustelu</a>
