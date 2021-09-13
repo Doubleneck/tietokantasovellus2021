@@ -3,7 +3,16 @@ Tämän keskustelun otsikko: {{ topicname}}
 
 {% for message in messages %}
 {{ message.content }}
-<a href="/{{ topicareaid }}">KESKEN...</a>
+<a href="/{{ topicareaid }}">KESKEN...TÄÄ VOIS OLLA: MUOKKAA/POISTA</a>
 <hr>
 {% endfor %}
-<a href="/{{ topicareaid }}/topic">Kommentoi tätä aihetta:</a>
+
+
+<form action="/1/1/addnewmessage" method="POST">
+    <br>
+      <textarea name="content" rows="3" cols="40"></textarea>
+      <br>
+      <input type="submit" value="Kommentoi!">
+      </form>
+
+<a href="/">Palaa aihealueisiin:</a>
