@@ -2,8 +2,14 @@ Aihealueen id: {{ topicareaid }}
 
 <form action="/{{ topicareaid }}/addnewtopic" method="POST">
     Aloita uusi ketju:  <br>
+
+
+    Otsikko:
+    <textarea name="title" rows="1" cols="40"></textarea>
+    Ensimmäinen viestisi:
     <textarea name="content" rows="3" cols="40"></textarea>
+    <input type="submit" value="lähetä">
     <br>
-    <input type="submit" value="Lähetä">
+    
     
     </form>
