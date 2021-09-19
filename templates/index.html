@@ -1,3 +1,4 @@
+
 {% if session.username %}
 <p>Olet kirjautunut nimellä {{ session.username }}</p>
 <a href="/logout">Kirjaudu ulos</a>
@@ -19,12 +20,9 @@
 <input type="submit" value="Kirjaudu">
 </form>
 
-<p> {{% invalidusername %}}</p>
 
 TAI:
 
 <a href="/register">Rekisteröidy tästä!</a>
 
 {% endif %}
-
-
