@@ -1,8 +1,9 @@
 Tämän keskustelun otsikko: {{ topicname}}
 <hr>
 
-{% for message in messages %}
-{{ message.content }}
+{% for message in messages %}<br>
+SISÄLTÖ:{{ message.content }} 
+LUOTU: {{ message.topic_id }}<br>
 <a href="/{{ topicareaid }}">KESKEN...TÄÄ VOIS OLLA: MUOKKAA/POISTA</a>
 <hr>
 {% endfor %}
@@ -15,3 +16,6 @@ Tämän keskustelun otsikko: {{ topicname}}
     </form>
 
 <a href="/">Palaa aihealueisiin:</a>
+
+
+
