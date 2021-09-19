@@ -7,12 +7,11 @@ Tämän keskustelun otsikko: {{ topicname}}
 <hr>
 {% endfor %}
 
-
-<form action="/1/1/addnewmessage" method="POST">
+<form action="/{{ topicareaid }}/{{ topicid }}/addnewmessage" method="POST">
+  <br>
+    <textarea name="content" rows="3" cols="40"></textarea>
     <br>
-      <textarea name="content" rows="3" cols="40"></textarea>
-      <br>
-      <input type="submit" value="Kommentoi!">
-      </form>
+    <input type="submit" value="Lisää kommentti!">
+    </form>
 
 <a href="/">Palaa aihealueisiin:</a>
