@@ -9,7 +9,6 @@ def index():
     topicareas=messages.get_topicareas()
     return render_template("index.html", counter=counter, count=len(topicareas), topicareas=topicareas)
 
-
 @app.route("/login", methods=["POST"])
 def login():  
     '''user login'''
@@ -42,7 +41,6 @@ def register():
         return redirect("/registerok")  
     else:
         return redirect("/register")     #Error message missing so far
-
 
 @app.route("/registerok")
 def view_registerok():
@@ -84,7 +82,8 @@ def view_messages(topicarea_id,topic_id):
     '''messages get'''
     selected_messages=messages.view_messages(topicarea_id,topic_id)
     topic_name=messages.get_topicname(topic_id)
-    return render_template("topic.html", messages=selected_messages,topicareaid=topicarea_id,topicid=topic_id, topicname=topic_name)       
+    count=messages.count_visiblemessages(topic_id)
+    return render_template("topic.html", messages=selected_messages,topicareaid=topicarea_id,topicid=topic_id, topicname=topic_name, count=count)       
 
 @app.route("/<int:topicarea_id>/<int:topic_id>/addnewmessage", methods=["POST"])
 def addnewmessage(topicarea_id,topic_id):

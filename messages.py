@@ -41,14 +41,21 @@ def get_topicname(topic_id):
     topic_name=result.fetchone()[0]
     return topic_name
 
-def view_messages(topicarea_id,topic_id):
-    sql = "SELECT content FROM messages WHERE topics_id=:topic_id"
+def view_messages(topicarea_id,topic_id):#views VISIBLE=TRUE messages so far
+    sql = "SELECT content FROM messages WHERE topics_id=:topic_id and visible=TRUE"
     result = db.session.execute(sql, {"topic_id":topic_id})
     selected_messages= result
     return selected_messages
 
+def count_visiblemessages(topic_id):
+    sql = "SELECT COUNT(*) FROM messages WHERE topics_id=:topic_id and visible=TRUE"
+    result = db.session.execute(sql, {"topic_id":topic_id})
+    count = result.fetchone()[0]
+    return count
+
+
 def new_message(topicarea_id,topic_id,content,user_id):
-    sql = "INSERT INTO messages (topics_id, content, created_at,user_id) VALUES (:topic_id,:content,NOW(),:user_id)"
+    sql = "INSERT INTO messages (topics_id, content, created_at,user_id,visible) VALUES (:topic_id,:content,NOW(),:user_id,TRUE)"
     db.session.execute(sql, {"topic_id":topic_id,"content":content,"user_id":user_id})
     db.session.commit()  
 
