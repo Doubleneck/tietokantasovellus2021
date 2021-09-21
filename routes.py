@@ -86,9 +86,17 @@ def view_messages(topicarea_id,topic_id):
     return render_template("topic.html", messages=selected_messages,topicareaid=topicarea_id,topicid=topic_id, topicname=topic_name, count=count)       
 
 @app.route("/<int:topicarea_id>/<int:topic_id>/addnewmessage", methods=["POST"])
-def addnewmessage(topicarea_id,topic_id):
+def add_newmessage(topicarea_id,topic_id):
     '''adds new message as a reply to the topic'''
     content = request.form["content"]
     user_id=users.user_id()
     messages.new_message(topicarea_id,topic_id,content,user_id)
     return redirect("/"+str(topicarea_id)+"/"+str(topic_id))
+
+@app.route("/<int:topicarea_id>/<int:topic_id>/<int:message_id>", methods=["POST"])
+def delete_message (topicarea_id,topic_id,message_id):  
+    if messages.is_messageowner(message_id):
+        messages.delete_message(message_id)
+        return redirect("/"+str(topicarea_id)+"/"+str(topic_id))
+    else:
+        return redirect("/"+str(topicarea_id)+"/"+str(topic_id))    
