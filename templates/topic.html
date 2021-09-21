@@ -1,9 +1,10 @@
-Tämän keskustelun otsikko: {{ topicname}}
+Tämän keskustelun otsikko: {{ topicname}}<br>
+Viestien määrä: {{ count }}
 <hr>
 
 {% for message in messages %}<br>
 SISÄLTÖ:{{ message.content }} 
-LUOTU: {{ message.topic_id }}<br>
+TOPIC OTSIKKO: {{ message.topic_id }}<br>
 <a href="/{{ topicareaid }}">KESKEN...TÄÄ VOIS OLLA: MUOKKAA/POISTA</a>
 <hr>
 {% endfor %}
