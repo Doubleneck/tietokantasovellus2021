@@ -1,6 +1,8 @@
+{% if session.user_id %}
+<p>Olet kirjautunut id:llä {{ session.user_id  }}</p>
+<p>Olet kävijä nro: {{ counter }}</p>
 
-{% if session.username %}
-<p>Olet kirjautunut nimellä {{ session.username }}</p>
+
 <a href="/logout">Kirjaudu ulos</a>
 
 <hr>
@@ -26,3 +28,4 @@ TAI:
 <a href="/register">Rekisteröidy tästä!</a>
 
 {% endif %}
+
