@@ -3,9 +3,13 @@ Viestien määrä: {{ count }}
 <hr>
 
 {% for message in messages %}<br>
-SISÄLTÖ:{{ message.content }} 
-TOPIC OTSIKKO: {{ message.topic_id }}<br>
-<a href="/{{ topicareaid }}">KESKEN...TÄÄ VOIS OLLA: MUOKKAA/POISTA</a>
+Käyttäjä <i>{{ message.username }}</i> kirjoitti :"{{ message.content }}"<br>
+Luotu: {{ message.created_at.strftime("%Y-%m-%d %H:%M:%S") }}<br>
+message id: {{ message.id }}
+<form action="/{{ topicareaid }}/{{ topicid }}/{{ message.id }}" method="POST">
+  <br>    
+    <input type="submit" value="Delete">
+    </form>
 <hr>
 {% endfor %}
 

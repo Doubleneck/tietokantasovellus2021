@@ -1,4 +1,5 @@
 from db import db
+import users
 
 def get_topicareas():
     '''all topic areas, starting page'''
@@ -16,6 +17,12 @@ def get_topicareaname(topicarea_id):
     result = db.session.execute(sql, {"id":topicarea_id})
     topicarea_name= result.fetchone()[0]
     return topicarea_name
+
+def count_chains(topicarea_id):
+    sql = "SELECT COUNT(*) FROM topicareas WHERE id=:topicareaid and visible=TRUE"
+    result = db.session.execute(sql, {"topic_id":topicarea_id})
+    count = result.fetchone()[0]
+    return count
 
 
 def get_topics(topicarea_id):
@@ -42,12 +49,15 @@ def get_topicname(topic_id):
     return topic_name
 
 def view_messages(topicarea_id,topic_id):#views VISIBLE=TRUE messages so far
-    sql = "SELECT content FROM messages WHERE topics_id=:topic_id and visible=TRUE"
+    "SELECT M.content, U.username, M.created_at FROM messages M, users U WHERE M.user_id=U.id AND topics_id=:topic_id AND visible=TRUE"
+    #sql = "SELECT content, created_at, user_id   FROM messages WHERE topics_id=:topic_id and visible=TRUE"
+    sql =  "SELECT M.id,M.content, U.username, M.created_at FROM messages M, users U WHERE M.user_id=U.id AND topics_id=:topic_id AND visible=TRUE"
     result = db.session.execute(sql, {"topic_id":topic_id})
     selected_messages= result
     return selected_messages
 
 def count_visiblemessages(topic_id):
+    
     sql = "SELECT COUNT(*) FROM messages WHERE topics_id=:topic_id and visible=TRUE"
     result = db.session.execute(sql, {"topic_id":topic_id})
     count = result.fetchone()[0]
@@ -59,3 +69,16 @@ def new_message(topicarea_id,topic_id,content,user_id):
     db.session.execute(sql, {"topic_id":topic_id,"content":content,"user_id":user_id})
     db.session.commit()  
 
+def delete_message(message_id):
+    sql = "UPDATE messages SET visible = FALSE WHERE id=:message_id"
+    db.session.execute(sql,{"message_id":message_id})
+    db.session.commit()  
+
+def is_messageowner(message_id):
+    sql = "SELECT user_id FROM messages WHERE id=:message_id"
+    result = db.session.execute(sql,{"message_id":message_id})
+    owner = result.fetchone()[0]
+    return owner == users.user_id()
+  
+
+        
