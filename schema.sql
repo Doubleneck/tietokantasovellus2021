@@ -13,5 +13,5 @@ DROP TABLE IF EXISTS topics;
 CREATE TABLE topics (id SERIAL PRIMARY KEY, topicarea_id INTEGER REFERENCES topicareas, name TEXT, user_id INTEGER REFERENCES users, visible BOOLEAN);
 
 DROP TABLE IF EXISTS messages;
-CREATE TABLE messages (id SERIAL PRIMARY KEY, topic_id INTEGER REFERENCES topics, content TEXT, created_at TIMESTAMP, user_id INTEGER REFERENCES users, visible BOOLEAN);
+CREATE TABLE messages (id SERIAL PRIMARY KEY, topics_id INTEGER REFERENCES topics, content TEXT, created_at TIMESTAMP, user_id INTEGER REFERENCES users, visible BOOLEAN);
 
