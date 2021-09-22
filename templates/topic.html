@@ -1,4 +1,4 @@
-Tämän keskustelun otsikko: {{ topicname}}<br>
+Tämän keskustelun otsikko: {{ topicname }}<br>
 
 <hr>
 <br>
@@ -11,7 +11,7 @@ Tämän keskustelun otsikko: {{ topicname}}<br>
 {% for message in messages %}<br>
 Käyttäjä <i>{{ message.username }}</i> kirjoitti :"{{ message.content }}"<br>
 Luotu: {{ message.created_at.strftime("%Y-%m-%d %H:%M:%S") }}<br>
-message id: {{ message.id }}
+
 <form action="/{{ topicareaid }}/{{ topicid }}/{{ message.id }}" method="POST">
   <br>    
     <input type="submit" value="Delete">
