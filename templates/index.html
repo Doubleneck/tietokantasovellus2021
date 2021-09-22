@@ -7,7 +7,7 @@
 <p>KESKUSTELUALUEET:</p>
 {% for topicarea in topicareas %}
 AIHEALUE: {{ topicarea[1] }}, KETJUJA: 
-{{ topicarea[3] }} kpl, VIESTEJÄ: {{ topicarea[2] }}kpl, VIIMEISIN VIESTI: {{ topicarea[4] }}
+{{ topicarea[3] }} kpl, VIESTEJÄ: {{ topicarea[2] }}kpl, VIIMEISIN VIESTI: {{ topicarea[4].strftime("%Y-%m-%d %H:%M:%S") }}
 
 <a href="/{{ topicarea[0]}}">Go!</a>
 <hr>

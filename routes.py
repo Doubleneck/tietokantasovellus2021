@@ -83,9 +83,8 @@ def view_messages(topicarea_id,topic_id):
     '''messages get'''
     selected_messages=messages.view_messages(topic_id)
     topic_name=messages.get_topicname(topic_id)
-    count=messages.count_messages(topic_id)
     return render_template("topic.html", messages=selected_messages, topicareaid=topicarea_id,
-                           topicid=topic_id, topicname=topic_name, count=count)
+                           topicid=topic_id, topicname=topic_name)
 
 @app.route("/<int:topicarea_id>/<int:topic_id>/addnewmessage", methods=["POST"])
 def add_newmessage(topicarea_id,topic_id):
