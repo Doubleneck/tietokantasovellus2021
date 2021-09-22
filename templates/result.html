@@ -1,0 +1,14 @@
+{% for message in messages %}<br>
+Käyttäjä <i>{{ message[2]}}</i> kirjoitti :"{{ message.content }}"<br>
+Luotu: {{ message.created_at.strftime("%Y-%m-%d %H:%M:%S") }}<br>
+
+{% endfor %}
+<br>
+
+<a href="/{{ topicareaid }}/{{ topicid }}">Palaa viesteihin</a>
+<br>
+<br>
+<a href="/">Palaa aihealueisiin:</a>
+<br>
+<br>
+<a href="/logout">Kirjaudu ulos</a>
