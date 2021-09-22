@@ -1,16 +1,22 @@
 {% if session.user_id %}
-<p>Olet kirjautunut id:llä {{ session.user_id  }}</p>
+<p>Olet kirjautunut nimellä <i>{{ session.user_id}}</i> </p>
 <p>Olet kävijä nro: {{ counter }}</p>
 
 
-<a href="/logout">Kirjaudu ulos</a>
-
 <hr>
+<p>KESKUSTELUALUEET:</p>
 {% for topicarea in topicareas %}
-{{ topicarea.name }}
-<a href="/{{ topicarea.id}}">Go!</a>
+{{ topicarea[1] }}, viestejä: 
+{{ topicarea[2] }} kpl
+
+<a href="/{{ topicarea[0]}}">Go!</a>
 <hr>
 {% endfor %}
+<br>
+<a href="/logout">Kirjaudu ulos</a>
+<br>
+
+
 <a href="/newtopicarea">Lisää Aihealue</a>
 
 {% else %}
