@@ -1,4 +1,5 @@
 from flask import render_template,redirect,request
+from db import db
 from app import app
 import visits,users,messages
 
@@ -36,7 +37,6 @@ def register():
     '''user registration'''
     username = request.form["username"]
     password = request.form["password"]
-    #print(users.username_available(username))
     if users.username_available(username):
         users.register(username,password)
         return redirect("/registerok")
@@ -102,3 +102,12 @@ def delete_message (topicarea_id,topic_id,message_id):
         return redirect("/"+str(topicarea_id)+"/"+str(topic_id))
     else:
         return redirect("/"+str(topicarea_id)+"/"+str(topic_id))
+
+@app.route("/<int:topicarea_id>/<int:topic_id>/result/")
+def result(topicarea_id,topic_id):
+    query = request.args["query"]
+    sql = "SELECT created_at, topics_id, U.username, content FROM messages M, Users U WHERE M.user_id=U.id and content LIKE :query and topics_id=:topic_id and M.visible=TRUE"
+    result = db.session.execute(sql, {"query":"%"+query+"%","topic_id":topic_id})
+    messages = result.fetchall()
+    print (messages)
+    return render_template("result.html", messages=messages, topicareaid=topicarea_id, topicid=topic_id)

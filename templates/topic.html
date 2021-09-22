@@ -1,7 +1,13 @@
 Tämän keskustelun otsikko: {{ topicname}}<br>
 Viestien määrä: {{ count }}
 <hr>
-
+<br>
+<form action="/{{ topicareaid }}/{{ topicid }}/result" method="GET">
+  Hakusana: <input type="text" name="query">
+  <br>
+  <input type="submit" value="Lähetä">
+  </form>
+<br>  
 {% for message in messages %}<br>
 Käyttäjä <i>{{ message.username }}</i> kirjoitti :"{{ message.content }}"<br>
 Luotu: {{ message.created_at.strftime("%Y-%m-%d %H:%M:%S") }}<br>
@@ -19,8 +25,14 @@ message id: {{ message.id }}
     <br>
     <input type="submit" value="Lisää kommentti!">
     </form>
+    <br>
+    
+    
 
 <a href="/">Palaa aihealueisiin:</a>
+<br>
+<a href="/logout">Kirjaudu ulos</a>
+
 
 
 

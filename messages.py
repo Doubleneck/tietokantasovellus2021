@@ -104,5 +104,9 @@ def is_messageowner(message_id):
     owner = result.fetchone()[0]
     return owner == users.user_id()
   
-
-        
+#def search_messages(query):        
+#    sql = "SELECT id, content FROM messages WHERE content LIKE :query"
+#    result = db.session.execute(sql, {"query":"%"+query+"%"})
+#    messages = result.fetchall()
+    
+#    return messages
