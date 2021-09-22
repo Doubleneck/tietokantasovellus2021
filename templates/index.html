@@ -1,13 +1,13 @@
 {% if session.user_id %}
-<p>Olet kirjautunut nimellä <i>{{ session.user_id}}</i> </p>
+<p>Olet kirjautunut id:llä <i>{{ session.user_id}}</i> </p>
 <p>Olet kävijä nro: {{ counter }}</p>
 
 
 <hr>
 <p>KESKUSTELUALUEET:</p>
 {% for topicarea in topicareas %}
-{{ topicarea[1] }}, viestejä: 
-{{ topicarea[2] }} kpl
+AIHEALUE: {{ topicarea[1] }}, KETJUJA: 
+{{ topicarea[3] }} kpl, VIESTEJÄ: {{ topicarea[2] }}kpl, VIIMEISIN VIESTI: {{ topicarea[4] }}
 
 <a href="/{{ topicarea[0]}}">Go!</a>
 <hr>
