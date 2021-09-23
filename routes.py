@@ -6,7 +6,7 @@ import visits,users,messages
 @app.route("/")
 def index():
     visits.add_visit()
-    logged_user = users.username()[0]
+    logged_user = users.username()
     visitscounter = visits.get_counter()
     topic_areas = messages.get_topicareas()
     return render_template("index.html", counter=visitscounter, logged=logged_user, 
