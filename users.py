@@ -19,10 +19,14 @@ def user_id():
     return session.get("user_id", 0)
 
 def username():
-    user_id = session.get("user_id", 0)
-    sql = "SELECT username FROM users WHERE id=:user_id"
-    result = db.session.execute(sql, {"user_id":user_id})
-    return result.fetchone()
+    if session:
+        user_id = session.get("user_id")
+        sql = "SELECT username FROM users WHERE id =:id "
+        result = db.session.execute(sql, {"id":user_id})
+        print (sql)
+        return result.fetchone()[0]
+    else:
+        return "No user"# REMOVE FROM PROD VERSION  
 
 def logout():
     del session["user_id"]
@@ -45,4 +49,8 @@ def is_admin():
     result = db.session.execute(sql, {"user_id":user_id}).fetchone()[0]
     return result == "admin"
       
-    
+def all_users():
+    sql = "SELECT username, access_level from USERS"
+    list = db.session.execute(sql).fetchall()
+    return list
+

@@ -12,19 +12,10 @@ def index():
     return render_template("index.html", counter=visitscounter, logged=logged_user, 
     count=len(topic_areas), topicareas=topic_areas)
 
-#@app.route("/login", methods=["POST"])
-#def login():
-#    '''user login'''
-#    username = request.form["username"]
-#    password = request.form["password"]
-#    if users.login(username, password):
-#        return redirect("/")
-#    else:
-#        return render_template("error.html", message="Väärä tunnus tai salasana")
 
 @app.route("/login", methods=["POST"])
-def adminlogin():
-    '''user admin login'''
+def login():
+    '''user and admin login'''
     username = request.form["username"]
     password = request.form["password"]
     if users.login(username, password):
@@ -58,9 +49,10 @@ def register():
         return redirect("/register")     #Error message missing so far
 
 @app.route("/admin")
-def profile():
+def admin_page():
+    users_list=users.all_users()
     if users.is_admin():
-       return render_template("admin.html")
+       return render_template("admin.html", users=users_list)
     else:
         return render_template("error.html", message="Ei oikeutta nähdä sivua")
 
