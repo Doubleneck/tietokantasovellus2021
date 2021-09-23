@@ -44,6 +44,20 @@ def register():
     else:
         return redirect("/register")     #Error message missing so far
 
+@app.route("/admin")
+def profile():
+    if users.is_admin():
+       return render_template("admin.html")
+    else:   
+#    allow = False
+#    if users.is_admin():
+#        allow = True
+#        return render_template("admin.html")
+    
+#    if not allow:
+        return render_template("error.html", message="Ei oikeutta nähdä sivua")
+
+
 @app.route("/registerok")
 def view_registerok():
     '''show user registration form succeed'''
