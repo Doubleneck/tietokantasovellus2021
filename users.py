@@ -39,3 +39,10 @@ def username_available (username):
     user = result.fetchone()
     return not user
     
+def is_admin():   
+    user_id=session.get("user_id", 0)
+    sql = "SELECT access_level FROM users WHERE id=:user_id"
+    result = db.session.execute(sql, {"user_id":user_id}).fetchone()[0]
+    return result == "admin"
+      
+    
