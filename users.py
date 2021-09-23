@@ -22,7 +22,7 @@ def username():
     user_id = session.get("user_id", 0)
     sql = "SELECT username FROM users WHERE id=:user_id"
     result = db.session.execute(sql, {"user_id":user_id})
-    return result.fetchone()[0]
+    return result.fetchone()
 
 def logout():
     del session["user_id"]
