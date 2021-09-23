@@ -18,6 +18,12 @@ def login(username, password):
 def user_id():
     return session.get("user_id", 0)
 
+def username():
+    user_id = session.get("user_id", 0)
+    sql = "SELECT username FROM users WHERE id=:user_id"
+    result = db.session.execute(sql, {"user_id":user_id})
+    return result.fetchone()[0]
+
 def logout():
     del session["user_id"]
 

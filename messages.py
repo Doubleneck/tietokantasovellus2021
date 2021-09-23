@@ -24,13 +24,6 @@ def get_topicareaname(topicarea_id):
     topicarea_name= result.fetchone()[0]
     return topicarea_name
 
-def count_chains(topicarea_id):
-    '''counts message chains intopicarea'''
-    sql = "SELECT COUNT(*) FROM topicareas WHERE id=:topicareaid and visible=TRUE"
-    result = db.session.execute(sql, {"topic_id":topicarea_id})
-    count = result.fetchone()[0]
-    return count
-
 def get_topics(topicarea_id):
     '''all topics in topicarea'''
     sql = "SELECT id , name FROM topics WHERE topicarea_id=:id "
@@ -40,26 +33,29 @@ def get_topics(topicarea_id):
 
 def add_newtopic (topicarea_id,user_id,topic_name,message_content):
     '''adds new topic, adds also the first message under this topic'''
-    sql = ("INSERT INTO topics (topicarea_id,name,user_id,visible)"
-           " VALUES (:topicarea_id,:name,:user_id,TRUE) returning id")
+    sql = ("INSERT INTO topics (topicarea_id,name,user_id,visible) "
+           "VALUES (:topicarea_id,:name,:user_id,TRUE) returning id")
     res=db.session.execute(sql, {"name":topic_name,"topicarea_id":topicarea_id,"user_id":user_id})
     topic_id = res.fetchone()[0]
-    
-    sql2 = ("INSERT INTO messages (topics_id, content, created_at, user_id, visible)"
+
+    sql2 = ("INSERT INTO messages (topics_id, content, created_at, user_id, visible) "
             "VALUES (:topic_id, :content, NOW(), :user_id, TRUE)")
     db.session.execute(sql2, {"topic_id":topic_id, "content":message_content,"user_id":user_id})
     db.session.commit()
-    return topic_id 
+    return topic_id
 
-def new_message(topicarea_id,topic_id,content,user_id):
-    sql = "INSERT INTO messages (topics_id, content, created_at, user_id, visible) VALUES (:topic_id, :content, NOW(), :user_id, TRUE)"
+def new_message(topic_id,content,user_id):
+    '''creates new message'''
+    sql = ("INSERT INTO messages (topics_id, content, created_at, user_id, visible) "
+           "VALUES (:topic_id, :content, NOW(), :user_id, TRUE)")
     db.session.execute(sql, {"topic_id":topic_id, "content":content,"user_id":user_id})
-    db.session.commit()  
-   
+    db.session.commit()
+
 def delete_message(message_id):
+    '''deletes message'''
     sql = "UPDATE messages SET visible = FALSE WHERE id=:message_id"
     db.session.execute(sql,{"message_id":message_id})
-    db.session.commit()  
+    db.session.commit()
 
 def get_topicname(topic_id):
     '''returns topic name by id'''
@@ -70,18 +66,18 @@ def get_topicname(topic_id):
 
 def view_messages(topic_id):
     '''views messages with value TRUE in column VISIBILITY'''
-    sql =  "SELECT M.id,M.content, U.username, M.created_at FROM messages M, users U WHERE M.user_id=U.id AND topics_id=:topic_id AND visible=TRUE"
+    sql = ("SELECT M.id,M.content, U.username, M.created_at FROM messages M, users U "
+           "WHERE M.user_id=U.id AND topics_id=:topic_id AND visible=TRUE")
     result = db.session.execute(sql, {"topic_id":topic_id})
     selected_messages= result
     return selected_messages
 
-def count_messages(topic_id):
+def count_topicmessages(topic_id):
     '''counts visible messages by topic_id'''
     sql = "SELECT COUNT(*) FROM messages WHERE topics_id=:topic_id and visible=TRUE"
     result = db.session.execute(sql, {"topic_id":topic_id})
     count = result.fetchone()[0]
     return count
-
 
 def is_messageowner(message_id):
     sql = "SELECT user_id FROM messages WHERE id=:message_id"
@@ -91,29 +87,26 @@ def is_messageowner(message_id):
 
 def last_messagetime(topicarea_id):
     '''returns last message's posting time in topicarea'''
-    sql = ("SELECT M.created_at FROM messages M, topics T, topicareas A " 
+    sql = ("SELECT M.created_at FROM messages M, topics T, topicareas A "
            "WHERE M.topics_id=T.id and T.topicarea_id=A.id and A.id=:topicarea_id "
            "and M.visible=TRUE order by M.created_at DESC")
-    result = db.session.execute(sql, {"topicarea_id":topicarea_id})  
-    palautus=result.fetchone()
-    if palautus == None:
+    result = db.session.execute(sql, {"topicarea_id":topicarea_id})
+    ret=result.fetchone()
+    if ret == None:
         return datetime.now()
     else:
-        return palautus[0]
+        return ret[0]
 
 def count_chains(topicarea_id):
-    sql = "SELECT count(*) FROM topics T, topicareas A WHERE T.topicarea_id=A.id  and A.id=:topicarea_id"  #PUUTTUU TOPIC VISIBLE
-    result = db.session.execute(sql, {"topicarea_id":topicarea_id}) 
+    '''counts visible message chains (=topics) of topicarea'''
+    sql = ("SELECT count(*) FROM topics T, topicareas A "
+           "WHERE T.topicarea_id=A.id and A.id=:topicarea_id and T.visible=TRUE")
+    result = db.session.execute(sql, {"topicarea_id":topicarea_id})
     return result.fetchone()[0]
 
 def count_messages(topicarea_id):
-    sql = "SELECT count(*) FROM messages M, topics T, topicareas A WHERE M.topics_id=T.id and T.topicarea_id=A.id  and A.id=:topicarea_id and M.visible=TRUE"  
+    '''counts all visible messages of topicarea'''
+    sql = ("SELECT count(*) FROM messages M, topics T, topicareas A WHERE M.topics_id=T.id "
+           "and T.topicarea_id=A.id and A.id=:topicarea_id and M.visible=TRUE")
     result = db.session.execute(sql, {"topicarea_id":topicarea_id})
-    return result.fetchone()[0]    
-  
-#def search_messages(query):        
-#    sql = "SELECT id, content FROM messages WHERE content LIKE :query"
-#    result = db.session.execute(sql, {"query":"%"+query+"%"})
-#    messages = result.fetchall()
-    
-#    return messages
+    return result.fetchone()[0]
