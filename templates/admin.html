@@ -1,10 +1,18 @@
-<p>ADMIN:</p>
+<p>ADMIN PAGE:</p>
 
-<a href="/">Etusivulle</a>
+<br>
+<br>
+USERS:
+<br>
+{% for user in users %}
+<p>{{ user.username }} -- {{ user.access_level }}</p>
+
+{% endfor %}
 <br>
 <a href="/newtopicarea">Lisää Aihealue</a>
 <br>
 <br>
 <br>
 <a href="/logout">Kirjaudu ulos</a>
+<a href="/">Etusivulle</a>
 <br>
