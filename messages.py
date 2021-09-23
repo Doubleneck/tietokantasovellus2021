@@ -11,11 +11,12 @@ def get_topicareas():
         list.append((t[0],t[1],count_messages(t[0]),count_chains(t[0]),last_messagetime(t[0])))
     return list
 
-def add_newtopicarea(topicarea_name):#TO BE CHANGED ADMIN ONLY
-    '''creates new topicarea'''
+def add_newtopicarea(topicarea_name):
+    '''creates new topicarea, only admin allowed'''
     sql = "INSERT INTO topicareas (name) VALUES (:name)"
     db.session.execute(sql, {"name":topicarea_name})
     db.session.commit()
+
 
 def get_topicareaname(topicarea_id):
     '''name for topicarea'''
