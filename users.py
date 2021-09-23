@@ -29,7 +29,7 @@ def logout():
 
 def register(username,password):
     hash_value = generate_password_hash(password)
-    sql = "INSERT INTO users (username, password) VALUES (:username, :password)"
+    sql = "INSERT INTO users (username, password, access_level) VALUES (:username, :password, 'user')"
     db.session.execute(sql, {"username":username, "password":hash_value})
     db.session.commit()
 

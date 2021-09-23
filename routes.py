@@ -12,15 +12,28 @@ def index():
     return render_template("index.html", counter=visitscounter, logged=logged_user, 
     count=len(topic_areas), topicareas=topic_areas)
 
+#@app.route("/login", methods=["POST"])
+#def login():
+#    '''user login'''
+#    username = request.form["username"]
+#    password = request.form["password"]
+#    if users.login(username, password):
+#        return redirect("/")
+#    else:
+#        return render_template("error.html", message="Väärä tunnus tai salasana")
+
 @app.route("/login", methods=["POST"])
-def login():
-    '''user login'''
+def adminlogin():
+    '''user admin login'''
     username = request.form["username"]
     password = request.form["password"]
     if users.login(username, password):
-        return redirect("/")
+        if users.is_admin():
+            return redirect("/admin")
+        else:    
+            return redirect("/")
     else:
-        return render_template("error.html", message="Väärä tunnus tai salasana")
+        return render_template("error.html", message="Väärä tunnus tai salasana")        
 
 @app.route("/logout")
 def logout():
@@ -48,13 +61,7 @@ def register():
 def profile():
     if users.is_admin():
        return render_template("admin.html")
-    else:   
-#    allow = False
-#    if users.is_admin():
-#        allow = True
-#        return render_template("admin.html")
-    
-#    if not allow:
+    else:
         return render_template("error.html", message="Ei oikeutta nähdä sivua")
 
 
@@ -65,12 +72,15 @@ def view_registerok():
 
 @app.route("/newtopicarea", methods = ["GET","POST"])
 def add_newtopicarea():
-    '''Adds new topic areas'''#Change rights: user -> admin
-    if request.method == "GET":
-        return render_template("newtopicarea.html")
-    if request.method == "POST":
-        topicarea_name = request.form["content"]
-        messages.add_newtopicarea(topicarea_name)
+    '''Adds new topic areas'''
+    if users.is_admin():
+        if request.method == "GET":
+            return render_template("newtopicarea.html")
+        if request.method == "POST":
+            topicarea_name = request.form["content"]
+            messages.add_newtopicarea(topicarea_name)
+            return redirect("/")
+    else:        
         return redirect("/")
 
 @app.route("/<int:topicarea_id>")
