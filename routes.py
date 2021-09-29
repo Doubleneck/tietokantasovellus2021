@@ -52,9 +52,10 @@ def register():
 @app.route("/admin")
 def admin_page():
     try:
-        users_list=users.all_users()
+        users_list=users.users()
+        pusers_list=users.pusers()
         if users.is_admin():
-            return render_template("admin.html", users=users_list)
+            return render_template("admin.html", users=users_list, pusers=pusers_list)
         else:
             return render_template("error.html", message="Ei oikeutta nähdä sivua")
     except:
@@ -158,3 +159,16 @@ def secret_area():
         return render_template("secret.html")
     else:
         return "Ei sallittu"    
+
+@app.route("/admin/users/<int:user_id>/", methods=["POST"])
+def add_puser(user_id):
+    users.add_puser(user_id)
+    print("KUKKUU")
+    return redirect("/admin")
+
+@app.route("/admin/pusers/<int:user_id>/", methods=["POST"])
+def remove_puser(user_id):
+    users.remove_puser(user_id)
+    print("KUKKUU")
+    return redirect("/admin")    
+

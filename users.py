@@ -59,8 +59,23 @@ def is_puser():
 #    print (session["access_level"])
     return session["access_level"] == "puser"    
       
-def all_users():
-    sql = "SELECT username, access_level from USERS"
+def add_puser(user_id): 
+    sql = "UPDATE users SET access_level = 'puser' where id=:user_id"
+    db.session.execute(sql, {"user_id":user_id})
+    db.session.commit()
+
+def remove_puser(user_id): 
+    sql = "UPDATE users SET access_level = 'user' where id=:user_id"
+    db.session.execute(sql, {"user_id":user_id})
+    db.session.commit()
+
+def users():
+    sql = "SELECT username, access_level, id from USERS where access_level = 'user'"
     list = db.session.execute(sql).fetchall()
     return list
 
+def pusers():
+    '''priviledged users'''
+    sql = "SELECT username, access_level, id from USERS where access_level = 'puser'"
+    list = db.session.execute(sql).fetchall()
+    return list
