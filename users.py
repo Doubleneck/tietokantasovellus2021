@@ -46,10 +46,18 @@ def username_available (username):
     return not user
     
 def is_admin():   
-    user_id=session.get("user_id", 0)
-    sql = "SELECT access_level FROM users WHERE id=:user_id"
-    result = db.session.execute(sql, {"user_id":user_id}).fetchone()[0]
-    return result == "admin"
+#    user_id=session.get("user_id", 0)
+#    sql = "SELECT access_level FROM users WHERE id=:user_id"
+#    result = db.session.execute(sql, {"user_id":user_id}).fetchone()[0]
+    return session["access_level"] == "admin"
+
+def is_puser():  
+    "evaluates if user is priviledged user (puser)" 
+#    user_id=session.get("user_id", 0)
+#    sql = "SELECT access_level FROM users WHERE id=:user_id"
+#    result = db.session.execute(sql, {"user_id":user_id}).fetchone()[0]
+#    print (session["access_level"])
+    return session["access_level"] == "puser"    
       
 def all_users():
     sql = "SELECT username, access_level from USERS"
