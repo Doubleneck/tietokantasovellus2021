@@ -18,7 +18,7 @@
 AIHEALUE: {{ topicarea[1] }}, KETJUJA: 
 {{ topicarea[3] }} kpl, VIESTEJÄ: {{ topicarea[2] }}kpl, VIIMEISIN VIESTI: {{ topicarea[4].strftime("%Y-%m-%d %H:%M:%S") }}
 {% if session.access_level == "admin" %}
-<form action="/remove/{{ topicarea[0] }}" method="POST">
+<form action="/admin/remove/{{ topicarea[0] }}" method="POST">
     <br>    
       <input type="submit" value="Delete">
       </form>
