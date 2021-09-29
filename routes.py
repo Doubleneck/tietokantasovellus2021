@@ -4,8 +4,7 @@ from app import app
 import visits,users,messages
 
 @app.route("/")
-def index():
-    visits.add_visit()
+def index():    
     logged_user = users.username()
     visitscounter = visits.get_counter()
     topic_areas = messages.get_topicareas()
@@ -19,6 +18,7 @@ def login():
     username = request.form["username"]
     password = request.form["password"]
     if users.login(username, password):
+        visits.add_visit()
         if users.is_admin():
             return redirect("/admin")
         else:    
