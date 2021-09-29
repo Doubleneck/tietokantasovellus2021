@@ -1,15 +1,19 @@
-from flask import render_template,redirect,request
+from flask import render_template,redirect,request, sessions
 from db import db
 from app import app
 import visits,users,messages
 
 @app.route("/")
-def index():    
-    logged_user = users.username()
-    visitscounter = visits.get_counter()
-    topic_areas = messages.get_topicareas()
-    return render_template("index.html", counter=visitscounter, logged=logged_user, 
-    count=len(topic_areas), topicareas=topic_areas)
+def index():
+    try: 
+        logged_user = users.username()
+        visitscounter = visits.get_counter()
+        topic_areas = messages.get_topicareas()
+        return render_template("index.html", counter=visitscounter, logged=logged_user, 
+        count=len(topic_areas), topicareas=topic_areas)
+    except:
+        return render_template("index.html")
+
 
 
 @app.route("/login", methods=["POST"])
@@ -18,11 +22,8 @@ def login():
     username = request.form["username"]
     password = request.form["password"]
     if users.login(username, password):
-        visits.add_visit()
-        if users.is_admin():
-            return redirect("/admin")
-        else:    
-            return redirect("/")
+        visits.add_visit()        
+        return redirect("/")
     else:
         return render_template("error.html", message="Väärä tunnus tai salasana")        
 
