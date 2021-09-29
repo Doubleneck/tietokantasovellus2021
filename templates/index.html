@@ -1,6 +1,15 @@
+{% if session.access_level == "admin" %}
+<p>Olet kirjautuneena roolissa ADMIN</p>
+<a href="/admin">To admin page</a>
+{% endif %}
+
 {% if session.user_id %}
 <p>Olet kirjautunut nimellä: <i>{{ logged }}</i> </p>
 <p>Olet kävijä nro: {{ counter }}</p>
+
+
+
+
 
 
 <hr>
@@ -36,4 +45,9 @@ TAI:
 
 
 {% endif %}
+
+
+
+
+
 

@@ -3,7 +3,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from db import db
 
 def login(username, password):
-    sql = "SELECT id, password FROM users WHERE username=:username"
+    sql = "SELECT id, access_level, password FROM users WHERE username=:username"
     result = db.session.execute(sql, {"username":username})
     user = result.fetchone()
     if not user:
@@ -11,6 +11,7 @@ def login(username, password):
     else:
         if check_password_hash(user.password, password):
             session["user_id"] = user.id
+            session["access_level"] = user.access_level
             return True
         else:
             return False
@@ -30,6 +31,7 @@ def username():
 
 def logout():
     del session["user_id"]
+    del session["access_level"]
 
 def register(username,password):
     hash_value = generate_password_hash(password)
