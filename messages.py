@@ -4,7 +4,7 @@ import users
 
 def get_topicareas():
     '''for starting page: counts for messages,chains and lastmessagetime in every topicarea'''
-    result = db.session.execute("SELECT id , name FROM topicareas")
+    result = db.session.execute("SELECT id , name FROM topicareas where visible=True")
     topicareas = result.fetchall()
     list=[]
     for t in topicareas:
@@ -13,9 +13,15 @@ def get_topicareas():
 
 def add_newtopicarea(topicarea_name):
     '''creates new topicarea, only admin allowed'''
-    sql = "INSERT INTO topicareas (name) VALUES (:name)"
+    sql = "INSERT INTO topicareas (name,visible) VALUES (:name,True)"
     db.session.execute(sql, {"name":topicarea_name})
     db.session.commit()
+
+def delete_topicarea(topicarea_id):
+    '''deletes topicarea, only admin allowed'''
+    sql = "UPDATE topicareas SET visible = False where id=:topicarea_id"
+    db.session.execute(sql, {"topicarea_id":topicarea_id})
+    db.session.commit()    
 
 
 def get_topicareaname(topicarea_id):

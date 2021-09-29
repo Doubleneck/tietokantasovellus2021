@@ -82,6 +82,8 @@ def add_newtopicarea():
     except:
         return "Not allowed"        
 
+ 
+
 @app.route("/<int:topicarea_id>")
 def view_topics(topicarea_id):
     '''topics get'''
@@ -91,7 +93,9 @@ def view_topics(topicarea_id):
         return render_template ("topics.html", count=len(selectedtopics), topics=selectedtopics,
                                 topicareaid=topicarea_id, topicareaname=topicarea)
     except:
-        return "Not allowed"                               
+        return "Not allowed"      
+
+                                 
 
 @app.route("/<int:topicarea_id>/newtopic", methods=["GET","POST"])
 def add_newtopic(topicarea_id):
@@ -155,7 +159,6 @@ def result(topicarea_id,topic_id):
 @app.route("/secretarea")
 def secret_area():
     if users.is_puser() or users.is_admin():
-        print (users.is_puser())
         return render_template("secret.html")
     else:
         return "Ei sallittu"    
@@ -163,12 +166,15 @@ def secret_area():
 @app.route("/admin/users/<int:user_id>/", methods=["POST"])
 def add_puser(user_id):
     users.add_puser(user_id)
-    print("KUKKUU")
     return redirect("/admin")
 
 @app.route("/admin/pusers/<int:user_id>/", methods=["POST"])
 def remove_puser(user_id):
     users.remove_puser(user_id)
-    print("KUKKUU")
     return redirect("/admin")    
+
+@app.route("/remove/<int:topicarea_id>/", methods=["POST"])
+def remove_topicarea(topicarea_id):
+    messages.delete_topicarea(topicarea_id)
+    return redirect("/")    
 
