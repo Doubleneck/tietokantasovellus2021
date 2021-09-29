@@ -2,10 +2,30 @@
 
 <br>
 <br>
-USERS:
+KÄYTTÄJÄT:
 <br>
 {% for user in users %}
-<p>{{ user.username }} -- {{ user.access_level }}</p>
+<p>{{ user.username }} -- {{ user.access_level }} 
+    <form action="/admin/users/{{ user.id }}" method="POST">    
+          <input type="submit" value="Anna oikeudet salatulle alueelle">
+          </form>
+      <hr>
+</p>
+
+
+{% endfor %}
+<br>
+<br>
+KÄYTTÄJÄT SALATUILLA OIKEUKSILLA:
+<br>
+{% for user in pusers %}
+<p>{{ user.username }} -- {{ user.access_level }}  {{ user.id }}   
+    <form action="/admin/pusers/{{ user.id }}" method="POST">    
+        <input type="submit" value="Poista oikeudet salatulle alueelle">
+        </form>
+    <hr>
+</p>
+
 
 {% endfor %}
 <br>
