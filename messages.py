@@ -68,7 +68,7 @@ def get_topicname(topic_id):
 def view_messages(topic_id):
     '''views messages with value TRUE in column VISIBILITY'''
     sql = ("SELECT M.id,M.content, U.username, M.created_at FROM messages M, users U "
-           "WHERE M.user_id=U.id AND topics_id=:topic_id AND visible=TRUE")
+           "WHERE M.user_id=U.id AND topics_id=:topic_id AND visible=TRUE ORDER BY ID DESC")
     result = db.session.execute(sql, {"topic_id":topic_id})
     selected_messages= result
     return selected_messages
