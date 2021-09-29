@@ -150,3 +150,11 @@ def result(topicarea_id,topic_id):
         return render_template("result.html", messages=messages, topicareaid=topicarea_id, topicid=topic_id)
     except:
         return "Not allowed"       
+
+@app.route("/secretarea")
+def secret_area():
+    if users.is_puser() or users.is_admin():
+        print (users.is_puser())
+        return render_template("secret.html")
+    else:
+        return "Ei sallittu"    
