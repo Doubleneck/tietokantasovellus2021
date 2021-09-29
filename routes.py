@@ -94,7 +94,6 @@ def view_topics(topicarea_id):
         return "Not allowed"      
 
                                  
-
 @app.route("/<int:topicarea_id>/newtopic", methods=["GET","POST"])
 def add_newtopic(topicarea_id):
     '''new topic = title for chain of messages'''
@@ -114,11 +113,12 @@ def add_newtopic(topicarea_id):
 def view_messages(topicarea_id,topic_id):
     '''messages get'''
     try:
-        selected_messages = messages.view_messages(topic_id)
+        selected_messages = messages.view_messages(topic_id)        
         topic_name = messages.get_topicname(topic_id)
         return render_template("topic.html", messages=selected_messages, topicareaid=topicarea_id,
                                topicid=topic_id, topicname=topic_name)
     except:
+        print("TÄÄLLÄ")
         return "Not allowed"   
 
 @app.route("/<int:topicarea_id>/<int:topic_id>/addnewmessage", methods=["POST"])
@@ -135,7 +135,7 @@ def add_newmessage(topicarea_id,topic_id):
 @app.route("/<int:topicarea_id>/<int:topic_id>/<int:message_id>", methods=["POST"])
 def delete_message (topicarea_id,topic_id,message_id):
     try:
-        if messages.is_messageowner(message_id):
+        if messages.is_messageowner(message_id) or users.is_admin():
             messages.delete_message(message_id)
         return redirect("/"+str(topicarea_id)+"/"+str(topic_id))
     except:
@@ -144,7 +144,7 @@ def delete_message (topicarea_id,topic_id,message_id):
 @app.route("/<int:topicarea_id>/<int:topic_id>/<int:message_id>/edit", methods=["POST"])
 def edit_message (topicarea_id,topic_id,message_id):
     try:
-        if messages.is_messageowner(message_id):
+        if messages.is_messageowner(message_id) or users.is_admin():
             new_content = request.form["content"]
             messages.edit_message(message_id,new_content)
         return redirect("/"+str(topicarea_id)+"/"+str(topic_id))
