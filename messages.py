@@ -64,6 +64,12 @@ def delete_message(message_id):
     db.session.execute(sql,{"message_id":message_id})
     db.session.commit()
 
+def edit_message(message_id, new_content):
+    '''updates message'''
+    sql = "UPDATE messages SET content =:new_content WHERE id=:message_id"
+    db.session.execute(sql,{"message_id":message_id,"new_content":new_content})
+    db.session.commit()    
+
 def get_topicname(topic_id):
     '''returns topic name by id'''
     sql="SELECT name FROM topics WHERE id=:topic_id"

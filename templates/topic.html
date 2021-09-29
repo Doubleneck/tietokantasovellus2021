@@ -12,11 +12,22 @@ Tämän keskustelun otsikko: {{ topicname }}<br>
 Käyttäjä <i>{{ message.username }}</i> kirjoitti :"{{ message.content }}"<br>
 Luotu: {{ message.created_at.strftime("%Y-%m-%d %H:%M:%S") }}<br>
 
+
 <form action="/{{ topicareaid }}/{{ topicid }}/{{ message.id }}" method="POST">
   <br>    
     <input type="submit" value="Delete">
     </form>
+
+
+<form action="/{{ topicareaid }}/{{ topicid }}/{{ message.id }}/edit" method="POST">
+    <textarea name="content" rows="3" cols="40"></textarea>
+    <br>
+    <input type="submit" value="Edit">
+    </form>
+
+   
 <hr>
+
 {% endfor %}
 
 <form action="/{{ topicareaid }}/{{ topicid }}/addnewmessage" method="POST">

@@ -82,8 +82,6 @@ def add_newtopicarea():
     except:
         return "Not allowed"        
 
- 
-
 @app.route("/<int:topicarea_id>")
 def view_topics(topicarea_id):
     '''topics get'''
@@ -143,6 +141,15 @@ def delete_message (topicarea_id,topic_id,message_id):
     except:
         return "Not allowed"       
 
+@app.route("/<int:topicarea_id>/<int:topic_id>/<int:message_id>/edit", methods=["POST"])
+def edit_message (topicarea_id,topic_id,message_id):
+    try:
+        if messages.is_messageowner(message_id):
+            new_content = request.form["content"]
+            messages.edit_message(message_id,new_content)
+        return redirect("/"+str(topicarea_id)+"/"+str(topic_id))
+    except:
+        return "Not allowed"  
 
 @app.route("/<int:topicarea_id>/<int:topic_id>/result/")
 def result(topicarea_id,topic_id):
@@ -173,8 +180,14 @@ def remove_puser(user_id):
     users.remove_puser(user_id)
     return redirect("/admin")    
 
-@app.route("/remove/<int:topicarea_id>/", methods=["POST"])
+@app.route("/admin/remove/<int:topicarea_id>/", methods=["POST"])
 def remove_topicarea(topicarea_id):
-    messages.delete_topicarea(topicarea_id)
-    return redirect("/")    
+    try:
+        if users.is_admin():
+            messages.delete_topicarea(topicarea_id)
+            return redirect("/")    
+        else:
+            return "ei sallittu"    
+    except:
+        return "Not allowed"        
 

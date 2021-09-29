@@ -24,7 +24,6 @@ def username():
         user_id = session.get("user_id")
         sql = "SELECT username FROM users WHERE id =:id "
         result = db.session.execute(sql, {"id":user_id})
-        print (sql)
         return result.fetchone()[0]
     else:
         return "No user"# REMOVE FROM PROD VERSION  
