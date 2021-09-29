@@ -1,7 +1,7 @@
 
  
 DROP TABLE IF EXISTS users;
-CREATE TABLE users (id SERIAL PRIMARY KEY, username TEXT, password TEXT,access_level TEXT);
+CREATE TABLE users (id SERIAL PRIMARY KEY, username TEXT UNIQUE, password TEXT,access_level TEXT);
  
 DROP TABLE IF EXISTS visitors;
 CREATE TABLE visitors (id SERIAL PRIMARY KEY, moment TIMESTAMP);
