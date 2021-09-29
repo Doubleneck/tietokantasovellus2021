@@ -17,8 +17,15 @@
 {% for topicarea in topicareas %}
 AIHEALUE: {{ topicarea[1] }}, KETJUJA: 
 {{ topicarea[3] }} kpl, VIESTEJÄ: {{ topicarea[2] }}kpl, VIIMEISIN VIESTI: {{ topicarea[4].strftime("%Y-%m-%d %H:%M:%S") }}
-
+{% if session.access_level == "admin" %}
+<form action="/remove/{{ topicarea[0] }}" method="POST">
+    <br>    
+      <input type="submit" value="Delete">
+      </form>
+  <hr>
+  {% endif %}     
 <a href="/{{ topicarea[0]}}">Go!</a>
+
 <hr>
 {% endfor %}
 <br>
