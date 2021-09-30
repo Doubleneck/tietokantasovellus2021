@@ -1,4 +1,14 @@
 Tämän keskustelun otsikko: {{ topicname }}<br>
+Tämän keskustelun id:{{ topicid }}
+Tmän keskustelun omistaja {{ topicuserid }}
+Tmän session omistaja {{ session.user_id }}
+{% if session.access_level == "admin" or  topicuserid==session.user_id %}
+<form action="/{{ topicareaid }}/{{ topicid }}/delete" method="POST">
+  <br>    
+    <input type="submit" value="Delete">
+    </form>
+{% endif  %}
+
 
 <hr>
 <br>

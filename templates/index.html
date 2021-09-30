@@ -1,21 +1,19 @@
 {% if session.access_level == "admin" %}
-<p>Olet kirjautuneena roolissa ADMIN</p>
-<a href="/admin">To admin page</a>
-<br>
-<a href="/newtopicarea">Lisää Aihealue</a>
+  <p>Olet kirjautuneena roolissa ADMIN</p>
+  <a href="/admin">To admin page</a>
+  <br>
+  <a href="/newtopicarea">Lisää Aihealue</a>
 {% endif %}
 
 {% if session.user_id %}
-<p>Olet kirjautunut nimellä: <i>{{ logged }}</i> </p>
-<p>Olet kävijä nro: {{ counter }}</p>
-
-<br>
-
-<hr>
-<p>KESKUSTELUALUEET:</p>
-{% for topicarea in topicareas %}
-AIHEALUE: {{ topicarea[1] }}, KETJUJA: 
-{{ topicarea[3] }} kpl, VIESTEJÄ: {{ topicarea[2] }}kpl, VIIMEISIN VIESTI: {{ topicarea[4].strftime("%Y-%m-%d %H:%M:%S") }}
+  <p>Olet kirjautunut nimellä: <i>{{ logged }}</i> </p>
+  <p>Olet kävijä nro: {{ counter }}</p>
+  <br>
+  <hr>
+  <p>KESKUSTELUALUEET:</p>
+  {% for topicarea in topicareas %}
+    AIHEALUE: {{ topicarea[1] }}, KETJUJA: 
+  {{ topicarea[3] }} kpl, VIESTEJÄ: {{ topicarea[2] }}kpl, VIIMEISIN VIESTI: {{ topicarea[4].strftime("%Y-%m-%d %H:%M:%S") }}
 {% if session.access_level == "admin" %}
 <form action="/admin/remove/{{ topicarea[0] }}" method="POST">
     <br>    
@@ -29,8 +27,21 @@ AIHEALUE: {{ topicarea[1] }}, KETJUJA:
 
 {% if session.access_level == "admin" or  session.access_level == "puser" %}
 <p>NÄKYY ADMIN JA PUSER</p>
+{% for secretarea in secretareas %}
+AIHEALUE: {{ secretarea[1] }}, KETJUJA: 
+{{ secretarea[3] }} kpl, VIESTEJÄ: {{ secretarea[2] }}kpl, VIIMEISIN VIESTI: {{ secretarea[4].strftime("%Y-%m-%d %H:%M:%S") }}
+{% if session.access_level == "admin" %}
+<form action="/admin/remove/{{ secretarea[0] }}" method="POST">
+    <br>    
+      <input type="submit" value="Delete">
+      </form>
+  
+  {% endif %}     
+  <a href="/{{ secretarea[0]}}">Go!</a>
+  <br> 
 
-{% endif %} 
+{% endfor %} 
+{% endif %}  
 <hr>
 <br>
 <a href="/logout">Kirjaudu ulos</a>

@@ -47,10 +47,10 @@ def get_topicareaname(topicarea_id):
 
 def get_topics(topicarea_id):
     '''all topics in topicarea'''
-    sql = "SELECT id , name FROM topics WHERE topicarea_id=:id "
+    sql = "SELECT id , name, user_id FROM topics WHERE topicarea_id=:id and visible=True"
     result = db.session.execute(sql, {"id":topicarea_id})
     selected_topics = result.fetchall()
-    return selected_topics
+    return selected_topics    
 
 def add_newtopic (topicarea_id,user_id,topic_name,message_content):
     '''adds new topic, adds also the first message under this topic'''
@@ -64,6 +64,25 @@ def add_newtopic (topicarea_id,user_id,topic_name,message_content):
     db.session.execute(sql2, {"topic_id":topic_id, "content":message_content,"user_id":user_id})
     db.session.commit()
     return topic_id
+
+def delete_topic(topic_id):
+    '''deletes topic, admin , owner allowed'''
+    print("DELETOI!")
+    sql = "UPDATE topics SET visible = False where id=:topic_id"
+    db.session.execute(sql, {"topic_id":topic_id})
+    db.session.commit()  
+
+def is_topicowner(topic_id):
+    sql = "SELECT user_id FROM topics where id =:topic_id"
+    result = db.session.execute(sql,{"topic_id":topic_id})
+    owner = result.fetchone()[0]
+    return owner == users.user_id()
+
+def delete_messages(topic_id):
+    '''deletes messages by topic id'''
+    sql = "UPDATE messages SET visible = FALSE WHERE topics_id=:topic_id"
+    db.session.execute(sql,{"topic_id":topic_id})
+    db.session.commit()    
 
 def new_message(topic_id,content,user_id):
     '''creates new message'''
@@ -90,6 +109,13 @@ def get_topicname(topic_id):
     result = db.session.execute(sql, {"topic_id":topic_id})
     topic_name=result.fetchone()[0]
     return topic_name
+
+def get_topicowner(topic_id):
+    '''returns topic name by id'''
+    sql="SELECT user_id FROM topics WHERE id=:topic_id"
+    result = db.session.execute(sql, {"topic_id":topic_id})
+    topic_owner=result.fetchone()[0]
+    return topic_owner
 
 def view_messages(topic_id):
     '''views messages with value TRUE in column VISIBILITY'''
