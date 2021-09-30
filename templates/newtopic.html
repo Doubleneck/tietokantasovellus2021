@@ -2,15 +2,20 @@
 {% block title %}Etusivu{% endblock %}
 {% block content %}
 
-<b>Aloita uusi ketju: </b>  
+
+<br>
+<a href="/" style="color: rgb(44, 97, 241)">etusivulle</a> <a href="/{{ topicareaid }}"style="color: rgb(44, 97, 241)">keskusteluihin</a>
+<hr>
+<p>Aloita uusi Keskustelu: </p>  
+<br>
 <form action="/{{ topicareaid }}/newtopic" method="POST">
-    Otsikko:
-    <textarea name="title" rows="1" cols="40"></textarea><br>
-    Ensimmäinen viestisi:
-    <textarea name="content" rows="3" cols="40"></textarea>
-    <input type="submit" value="lähetä">
-    <br>
-    
-    
-    </form>
+  otsikko: <textarea name="title" rows="1" cols="50"></textarea><br>
+  ensimmäinen viesti: <textarea name="content" rows="3" cols="40"></textarea>
+  <input type="submit" value="lähetä">
+</form>
+<br>
+<br>
+<br>
+<br>
+<br>
     {% endblock %}

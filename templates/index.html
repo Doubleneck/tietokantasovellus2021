@@ -6,21 +6,20 @@
 
 
 {% if session.access_level == "admin" %}
-  <p>Olet kirjautuneena roolissa ADMIN</p>
+  <p style="color: rgb(249, 9, 5)">Huom! Olet kirjautuneena roolissa ADMIN!!</p>
   <a href="/admin" style="color: rgb(44, 97, 241)">HALLINNOI KÄYTTÄJIÄ</a> 
   <br>
   <a href="/newtopicarea" style="color: rgb(44, 97, 241)">LISÄÄ AIHEALUE</a>
 {% endif %}
 
 {% if session.user_id %}
-  <p>Olet kirjautunut nimellä: <i>{{ logged }}</i>. Olet kävijä nro: {{ counter }}.  </p>
-  <br>
+  <p style="color: rgb(44, 97, 241)">Olet kirjautunut nimellä: <i>{{ logged }}</i>. Olet kävijä nro: {{ counter }}.  </p>
   <hr>
   <H2>AIHEALUEET:</H2>
   <br>
   {% for topicarea in topicareas %}
-  <a href="/{{ topicarea[0]}}" style="color: rgb(44, 97, 241)">{{ topicarea[1] }}</a> (viestiketjuja: 
-  {{ topicarea[3] }} kpl, viestejä: {{ topicarea[2] }}kpl, viimeisin viesti: {{ topicarea[4].strftime("%Y-%m-%d %H:%M:%S") }})
+  <a href="/{{ topicarea[0]}}" style="color: rgb(44, 97, 241)"><b>{{ topicarea[1] }}</b></a> <div style="font-size:14px" >(viestiketjuja: 
+  {{ topicarea[3] }} kpl, viestejä: {{ topicarea[2] }}kpl, viimeisin viesti: {{ topicarea[4].strftime("%Y-%m-%d %H:%M:%S") }})</div>
 {% if session.access_level == "admin" %}
 <form action="/admin/remove/{{ topicarea[0] }}" method="POST">
     <br>    
@@ -36,8 +35,8 @@
 <H2>SALATUT AIHEALUEET:</H2>
 
 {% for secretarea in secretareas %}
-<a href="/{{ secretarea[0]}}">{{ secretarea[1] }}</a> </b>(ketjuja : 
-{{ secretarea[3] }} kpl, viestejä: {{ secretarea[2] }}kpl, viimeisin viesti: {{ secretarea[4].strftime("%Y-%m-%d %H:%M:%S") }})
+<a href="/{{ secretarea[0]}}"><b>{{ secretarea[1] }}</a> </b><div style="font-size:14px" > (ketjuja : 
+{{ secretarea[3] }} kpl, viestejä: {{ secretarea[2] }}kpl, viimeisin viesti: {{ secretarea[4].strftime("%Y-%m-%d %H:%M:%S") }})</div>
 
 {% if session.access_level == "admin" %}
 <form action="/admin/remove/{{ secretarea[0] }}" method="POST">   

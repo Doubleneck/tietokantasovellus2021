@@ -2,7 +2,7 @@
 {% block title %}viestit{% endblock %}
 {% block content %}
 
-Olet keskustelussa: <b>{{ topicname }}</b> 
+<p style="color: rgb(44, 97, 241)">Tämän keskustelun otsikko on<i>"{{ topicname }}"</i> </p>
 {% if session.access_level == "admin" or  topicuserid==session.user_id %}
 <form action="/{{ topicareaid }}/{{ topicid }}/delete" method="POST">    
   <input type="submit" value="poista aloittamasi keskustelu">
@@ -15,14 +15,16 @@ Olet keskustelussa: <b>{{ topicname }}</b>
 {% endif  %}
 
 <a href="/" style="color: rgb(44, 97, 241)">etusivulle</a> <a href="/{{ topicareaid }}"style="color: rgb(44, 97, 241)">keskusteluihin</a>
-<hr> 
 <form action="/{{ topicareaid }}/{{ topicid }}/result" method="GET">
   <input type="text" name="query">
   <input type="submit" value="hae ketjusta">
 </form>
+<hr> 
+
+<br>
 <form action="/{{ topicareaid }}/{{ topicid }}/addnewmessage" method="POST">
-  <textarea name="content" rows="3" cols="40"></textarea>  
-  <input type="submit" value="Kirjoita tähän ketjuun">
+  <textarea name="content" rows="5" cols="40"></textarea>  
+  <input type="submit" value="Kirjoita uusi viesti">
 </form>
 
 <h2>VIESTIT:</h2>
@@ -31,20 +33,21 @@ Olet keskustelussa: <b>{{ topicname }}</b>
 {% for message in messages %}<br>
 Käyttäjä <i>{{ message.username }}</i> kirjoitti :"{{ message.content }}"<br>
 Luotu: {{ message.created_at.strftime("%Y-%m-%d %H:%M:%S") }}<br>
-
+<br> 
+<br> 
 
 {% if message.user_id == session.user_id or session.access_level == "admin" %}
-<form action="/{{ topicareaid }}/{{ topicid }}/{{ message.id }}" method="POST">
-  <br>    
-    <input type="submit" value="Delete">
-    </form>
-
-
 <form action="/{{ topicareaid }}/{{ topicid }}/{{ message.id }}/edit" method="POST">
-    <textarea name="content" rows="3" cols="40">{{ message.content }}</textarea>
-    <br>
-    <input type="submit" value="Edit">
-    </form>
+  <textarea name="content" rows="2" cols="40">{{ message.content }}</textarea>
+  <input type="submit" value="muokkaa">
+</form>
+<br>
+<form action="/{{ topicareaid }}/{{ topicid }}/{{ message.id }}" method="POST">   
+    <input type="submit" value="poista viesti">
+</form>
+
+
+
     {% endif%}
     
 <hr>
