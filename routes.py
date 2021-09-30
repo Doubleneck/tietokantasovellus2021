@@ -31,8 +31,11 @@ def login():
 @app.route("/logout")
 def logout():
     '''user logout'''
-    users.logout()
-    return redirect("/")
+    try:
+        users.logout()
+        return redirect("/")
+    except:        
+        return redirect("/")
 
 @app.route("/register")
 def view_register():
