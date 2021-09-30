@@ -14,8 +14,6 @@ def index():
     except:
         return render_template("index.html")
 
-
-
 @app.route("/login", methods=["POST"])
 def login():
     '''user and admin login'''
@@ -80,7 +78,23 @@ def add_newtopicarea():
         else:        
             return redirect("/")
     except:
-        return "Not allowed"        
+        return "Not allowed" 
+
+@app.route("/newsecrettopicarea", methods = ["GET","POST"])
+def newsecret_area():
+    '''Adds new secret topic areas'''
+    try:
+        if users.is_admin():
+            if request.method == "GET":
+                return render_template("newtopicarea.html")
+            if request.method == "POST":
+                topicarea_name = request.form["secretcontent"]
+                messages.add_secrettopicarea(topicarea_name)
+                return redirect("/")
+        else:        
+            return redirect("/")
+    except:
+        return "Not allowed"              
 
 @app.route("/<int:topicarea_id>")
 def view_topics(topicarea_id):
@@ -164,7 +178,6 @@ def result(topicarea_id,topic_id):
         return "Not allowed"       
 
    
-
 @app.route("/admin/users/<int:user_id>/", methods=["POST"])
 def add_puser(user_id):
     users.add_puser(user_id)
@@ -186,13 +199,5 @@ def remove_topicarea(topicarea_id):
     except:
         return "Not allowed"        
 
-@app.route("/secretarea")
-def secret_area():
-    try:
-        if users.is_puser() or users.is_admin():
-            return render_template("secret.html")
-        else:
-            return "Ei sallittu"   
-    except:
-        return "Not allowed"               
+            
 
