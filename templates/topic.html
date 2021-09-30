@@ -2,34 +2,45 @@
 {% block title %}viestit{% endblock %}
 {% block content %}
 
-<p style="color: rgb(44, 97, 241)">Tämän keskustelun otsikko on<i>"{{ topicname }}"</i> </p>
-{% if session.access_level == "admin" or  topicuserid==session.user_id %}
-<form action="/{{ topicareaid }}/{{ topicid }}/delete" method="POST">    
-  <input type="submit" value="poista aloittamasi keskustelu">
-</form>
-<br> 
-<form action="/{{ topicareaid }}/{{ topicid }}/edit" method="POST">
-  <textarea name="content" rows="1" cols="40">{{ topicname }}</textarea>
-  <input type="submit" value="muokkaa otsikkoasi">
-</form>
-{% endif  %}
-
-<a href="/" style="color: rgb(44, 97, 241)">etusivulle</a> <a href="/{{ topicareaid }}"style="color: rgb(44, 97, 241)">keskusteluihin</a>
+<H1 style="color: rgb(0, 0, 0)">Olet keskustelussa "<i>{{ topicname }}</i>" </H1>
 <form action="/{{ topicareaid }}/{{ topicid }}/result" method="GET">
   <input type="text" name="query">
   <input type="submit" value="hae ketjusta">
 </form>
+<nav>
+  <ul>
+    <li><a href="/{{ topicareaid }}"> palaa keskusteluihin </a></li>
+  </ul>
+</nav>
+
+<hr>
+{% if session.access_level == "admin" or  topicuserid==session.user_id %}
+<br>
+<form action="/{{ topicareaid }}/{{ topicid }}/edit" method="POST">
+  <textarea name="content" rows="2" cols="40">{{ topicname }}</textarea>
+  <input type="submit" value="muokkaa otsikkoa">
+</form>
+
+<br>
+<form action="/{{ topicareaid }}/{{ topicid }}/delete" method="POST">    
+  <input type="submit" value="poista keskustelu">
+</form>
+<br>
+{% endif  %}
+<hr>
+<br>
+
 <hr> 
 
 <br>
+
 <form action="/{{ topicareaid }}/{{ topicid }}/addnewmessage" method="POST">
-  <textarea name="content" rows="5" cols="40"></textarea>  
+  <textarea name="content" rows="5" cols="30"></textarea>  
   <input type="submit" value="Kirjoita uusi viesti">
 </form>
-
+<hr>  
 <h2>VIESTIT:</h2>
 
-<br>  
 {% for message in messages %}<br>
 Käyttäjä <i>{{ message.username }}</i> kirjoitti :"{{ message.content }}"<br>
 Luotu: {{ message.created_at.strftime("%Y-%m-%d %H:%M:%S") }}<br>
