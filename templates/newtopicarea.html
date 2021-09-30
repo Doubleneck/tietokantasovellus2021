@@ -1,14 +1,18 @@
+{% extends "layout.html" %}
+{% block title %}Etusivu{% endblock %}
+{% block content %}
 <form action="/newtopicarea" method="POST">
 Uusi aihealue: <br>
 <textarea name="content" rows="3" cols="40"></textarea>
 <br>
 <input type="submit" value="Lähetä">
 </form>
-
-
 <form action="/newsecrettopicarea" method="POST">
     Uusi salainen aihealue: <br>
     <textarea name="secretcontent" rows="3" cols="40"></textarea>
     <br>
     <input type="submit" value="Lähetä">
     </form>
+    <br>
+    <a href="/" style="color: rgb(44, 97, 241)">etusivulle</a>    
+    {% endblock %}    

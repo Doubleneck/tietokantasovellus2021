@@ -1,7 +1,8 @@
-<p>USER ADMIN PAGE:</p>
+{% extends "layout.html" %}
+{% block title %}Admin{% endblock %}
+{% block content %}<p>HALLINNOI KÄYTTÄJIÄ:</p>
 <br>
-<a href="/logout">Kirjaudu ulos</a>
-<a href="/">Etusivulle</a>
+<a href="/"style="color: rgb(44, 97, 241)">Etusivulle</a>
 <br>
 <br>
 <br>
@@ -22,7 +23,7 @@ KÄYTTÄJÄT:
 KÄYTTÄJÄT SALATUILLA OIKEUKSILLA:
 <br>
 {% for user in pusers %}
-<p>{{ user.username }} -- {{ user.access_level }}  {{ user.id }}   
+<p>{{ user.username }} -- {{ user.access_level }} käyttäjä id: {{ user.id }}   
     <form action="/admin/pusers/{{ user.id }}" method="POST">    
         <input type="submit" value="Poista oikeudet salatulle alueelle">
         </form>
@@ -31,4 +32,4 @@ KÄYTTÄJÄT SALATUILLA OIKEUKSILLA:
 
 
 {% endfor %}
-
+{% endblock %}

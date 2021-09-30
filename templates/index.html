@@ -1,19 +1,26 @@
+{% extends "layout.html" %}
+{% block title %}Etusivu{% endblock %}
+{% block content %}
+
+
+
+
 {% if session.access_level == "admin" %}
   <p>Olet kirjautuneena roolissa ADMIN</p>
-  <a href="/admin">To admin page</a>
+  <a href="/admin" style="color: rgb(44, 97, 241)">HALLINNOI KÄYTTÄJIÄ</a> 
   <br>
-  <a href="/newtopicarea">Lisää Aihealue</a>
+  <a href="/newtopicarea" style="color: rgb(44, 97, 241)">LISÄÄ AIHEALUE</a>
 {% endif %}
 
 {% if session.user_id %}
-  <p>Olet kirjautunut nimellä: <i>{{ logged }}</i> </p>
-  <p>Olet kävijä nro: {{ counter }}</p>
+  <p>Olet kirjautunut nimellä: <i>{{ logged }}</i>. Olet kävijä nro: {{ counter }}.  </p>
   <br>
   <hr>
-  <p>KESKUSTELUALUEET:</p>
+  <H2>AIHEALUEET:</H2>
+  <br>
   {% for topicarea in topicareas %}
-    AIHEALUE: {{ topicarea[1] }}, KETJUJA: 
-  {{ topicarea[3] }} kpl, VIESTEJÄ: {{ topicarea[2] }}kpl, VIIMEISIN VIESTI: {{ topicarea[4].strftime("%Y-%m-%d %H:%M:%S") }}
+  <a href="/{{ topicarea[0]}}" style="color: rgb(44, 97, 241)">{{ topicarea[1] }}</a> (viestiketjuja: 
+  {{ topicarea[3] }} kpl, viestejä: {{ topicarea[2] }}kpl, viimeisin viesti: {{ topicarea[4].strftime("%Y-%m-%d %H:%M:%S") }})
 {% if session.access_level == "admin" %}
 <form action="/admin/remove/{{ topicarea[0] }}" method="POST">
     <br>    
@@ -21,30 +28,31 @@
       </form>
   
   {% endif %}     
-<a href="/{{ topicarea[0]}}">Go!</a>
+
 <hr>
 {% endfor %}
 
 {% if session.access_level == "admin" or  session.access_level == "puser" %}
-<p>NÄKYY ADMIN JA PUSER</p>
+<H2>SALATUT AIHEALUEET:</H2>
+
 {% for secretarea in secretareas %}
-AIHEALUE: {{ secretarea[1] }}, KETJUJA: 
-{{ secretarea[3] }} kpl, VIESTEJÄ: {{ secretarea[2] }}kpl, VIIMEISIN VIESTI: {{ secretarea[4].strftime("%Y-%m-%d %H:%M:%S") }}
+<a href="/{{ secretarea[0]}}">{{ secretarea[1] }}</a> </b>(ketjuja : 
+{{ secretarea[3] }} kpl, viestejä: {{ secretarea[2] }}kpl, viimeisin viesti: {{ secretarea[4].strftime("%Y-%m-%d %H:%M:%S") }})
+
 {% if session.access_level == "admin" %}
-<form action="/admin/remove/{{ secretarea[0] }}" method="POST">
-    <br>    
-      <input type="submit" value="Delete">
-      </form>
+<form action="/admin/remove/{{ secretarea[0] }}" method="POST">   
+  <input type="submit" value="poista">
+</form>
   
   {% endif %}     
-  <a href="/{{ secretarea[0]}}">Go!</a>
+ 
+  <hr>
   <br> 
 
 {% endfor %} 
 {% endif %}  
 <hr>
 <br>
-<a href="/logout">Kirjaudu ulos</a>
 <br>
 
 
@@ -60,13 +68,18 @@ LOGIN:
     <input type="submit" value="Kirjaudu">
     </form>
 
+    <h2>Tervetuloa lemmikkifoorumille</h2>
 
-TAI:
+    <p>
+      Täällä keskustellaan karvakuonoista ja kilpikonnista. Muistathan käytöstavat ja et päästä koiraasi tai papukaijaasi itsekseen mellastamaan foorumilla.
+    </p>
 
-<a href="/register">Rekisteröidy tästä!</a>
+<br>
+<a href="/register" style="color: rgb(44, 97, 241)">Rekisteröidy tästä!</a>
 
 
 {% endif %}
+{% endblock %}
 
 
 
