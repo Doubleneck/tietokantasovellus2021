@@ -2,11 +2,16 @@ Tämän keskustelun otsikko: {{ topicname }}<br>
 Tämän keskustelun id:{{ topicid }}
 Tmän keskustelun omistaja {{ topicuserid }}
 Tmän session omistaja {{ session.user_id }}
+<br> 
 {% if session.access_level == "admin" or  topicuserid==session.user_id %}
-<form action="/{{ topicareaid }}/{{ topicid }}/delete" method="POST">
-  <br>    
+  <form action="/{{ topicareaid }}/{{ topicid }}/delete" method="POST">    
     <input type="submit" value="Delete">
-    </form>
+  </form>
+<br> 
+  <form action="/{{ topicareaid }}/{{ topicid }}/edit" method="POST">
+    <textarea name="content" rows="3" cols="40">{{ topicname }}</textarea>
+    <input type="submit" value="Edit">
+  </form>
 {% endif  %}
 
 

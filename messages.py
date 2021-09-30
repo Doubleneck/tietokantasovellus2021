@@ -67,10 +67,15 @@ def add_newtopic (topicarea_id,user_id,topic_name,message_content):
 
 def delete_topic(topic_id):
     '''deletes topic, admin , owner allowed'''
-    print("DELETOI!")
     sql = "UPDATE topics SET visible = False where id=:topic_id"
     db.session.execute(sql, {"topic_id":topic_id})
     db.session.commit()  
+
+def edit_topic(topic_id, content):
+    '''edit topic, admin , owner allowed'''  
+    sql = "UPDATE topics SET name=:content where id=:topic_id"
+    db.session.execute(sql, {"topic_id":topic_id,"content":content})
+    db.session.commit()      
 
 def is_topicowner(topic_id):
     sql = "SELECT user_id FROM topics where id =:topic_id"
