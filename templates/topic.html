@@ -1,27 +1,32 @@
-Tämän keskustelun otsikko: {{ topicname }}<br>
-Tämän keskustelun id:{{ topicid }}
-Tmän keskustelun omistaja {{ topicuserid }}
-Tmän session omistaja {{ session.user_id }}
-<br> 
+{% extends "layout.html" %}
+{% block title %}viestit{% endblock %}
+{% block content %}
+
+Olet keskustelussa: <b>{{ topicname }}</b> 
 {% if session.access_level == "admin" or  topicuserid==session.user_id %}
-  <form action="/{{ topicareaid }}/{{ topicid }}/delete" method="POST">    
-    <input type="submit" value="Delete">
-  </form>
+<form action="/{{ topicareaid }}/{{ topicid }}/delete" method="POST">    
+  <input type="submit" value="poista aloittamasi keskustelu">
+</form>
 <br> 
-  <form action="/{{ topicareaid }}/{{ topicid }}/edit" method="POST">
-    <textarea name="content" rows="3" cols="40">{{ topicname }}</textarea>
-    <input type="submit" value="Edit">
-  </form>
+<form action="/{{ topicareaid }}/{{ topicid }}/edit" method="POST">
+  <textarea name="content" rows="1" cols="40">{{ topicname }}</textarea>
+  <input type="submit" value="muokkaa otsikkoasi">
+</form>
 {% endif  %}
 
-
-<hr>
-<br>
+<a href="/" style="color: rgb(44, 97, 241)">etusivulle</a> <a href="/{{ topicareaid }}"style="color: rgb(44, 97, 241)">keskusteluihin</a>
+<hr> 
 <form action="/{{ topicareaid }}/{{ topicid }}/result" method="GET">
-  Hakusana: <input type="text" name="query">
-  <br>
-  <input type="submit" value="Lähetä">
-  </form>
+  <input type="text" name="query">
+  <input type="submit" value="hae ketjusta">
+</form>
+<form action="/{{ topicareaid }}/{{ topicid }}/addnewmessage" method="POST">
+  <textarea name="content" rows="3" cols="40"></textarea>  
+  <input type="submit" value="Kirjoita tähän ketjuun">
+</form>
+
+<h2>VIESTIT:</h2>
+
 <br>  
 {% for message in messages %}<br>
 Käyttäjä <i>{{ message.username }}</i> kirjoitti :"{{ message.content }}"<br>
@@ -46,20 +51,15 @@ Luotu: {{ message.created_at.strftime("%Y-%m-%d %H:%M:%S") }}<br>
 
 {% endfor %}
 
-<form action="/{{ topicareaid }}/{{ topicid }}/addnewmessage" method="POST">
-  <br>
-    <textarea name="content" rows="3" cols="40"></textarea>
-    <br>
-    <input type="submit" value="Lisää kommentti!">
-    </form>
-    <br>
+
+    
     
     
 
-<a href="/">Palaa aihealueisiin:</a>
-<br>
-<a href="/logout">Kirjaudu ulos</a>
 
 
+
+
+{% endblock %}
 
 

@@ -1,11 +1,18 @@
-Keskustelujen määrä: {{ count }}
-Aihepiiri: {{ topicareaname }}
+{% extends "layout.html" %}
+{% block title %}keskustelut{% endblock %}
+{% block content %}
+
+Olet aihealueella: <b>{{ topicareaname }}</b> (keskusteluja: {{ count }}kpl)
+<br>
+<br>
+<a href="/{{ topicareaid }}/newtopic"  style="color: rgb(44, 97, 241)">aloita uusi keskustelu</a> <a href="/"  style="color: rgb(44, 97, 241)">palaa aihealueisiin</a>
 <hr>
+<h2>KESKUSTELUT:</h2>
 
 {% for topic in topics %}
-{{ topic.name }}
-<a href="/{{ topicareaid }}/{{ topic.id }}">Go!</a>
 
+<a href="/{{ topicareaid }}/{{ topic.id }}" style="color: rgb(44, 97, 241)">{{ topic.name }}</a>
+<br>
  
 
 
@@ -13,11 +20,12 @@ Aihepiiri: {{ topicareaname }}
     
 
 
-<hr>
-{% endfor %}
-<a href="/{{ topicareaid }}/newtopic">Aloita uusi keskustelu</a>
-
-
-<a href="/">Palaa aihealueisiin:</a>
 <br>
-<a href="/logout">Kirjaudu ulos</a>
+{% endfor %}
+
+
+
+
+<br>
+
+{% endblock %}

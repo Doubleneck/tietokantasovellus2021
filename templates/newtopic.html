@@ -1,11 +1,11 @@
-Aihealueen id: {{ topicareaid }}
+{% extends "layout.html" %}
+{% block title %}Etusivu{% endblock %}
+{% block content %}
 
+<b>Aloita uusi ketju: </b>  
 <form action="/{{ topicareaid }}/newtopic" method="POST">
-    Aloita uusi ketju:  <br>
-
-
     Otsikko:
-    <textarea name="title" rows="1" cols="40"></textarea>
+    <textarea name="title" rows="1" cols="40"></textarea><br>
     Ensimmäinen viestisi:
     <textarea name="content" rows="3" cols="40"></textarea>
     <input type="submit" value="lähetä">
@@ -13,3 +13,4 @@ Aihealueen id: {{ topicareaid }}
     
     
     </form>
+    {% endblock %}

@@ -1,0 +1,17 @@
+<!doctype html>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<title>Lemmikkifoorumi - {% block title %}{% endblock %}</title>
+<div class="header">
+    <h1>Lemmikkifoorumi</h1>
+</div>
+
+<a href="/logout" >
+    <p align="right" style="color: rgb(44, 97, 241)" >kirjaudu ulos</p>
+ </a>
+<hr>
+{% block content %}{% endblock %}
+<hr>
