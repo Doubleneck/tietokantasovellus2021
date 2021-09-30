@@ -1,12 +1,10 @@
 {% extends "layout.html" %}
-{% block title %}Admin{% endblock %}
-{% block content %}<p>HALLINNOI KÄYTTÄJIÄ:</p>
-<br>
-<a href="/"style="color: rgb(44, 97, 241)">Etusivulle</a>
-<br>
+{% block title %}admin{% endblock %}
+{% block content %}
+<H1>HALLINNOI KÄYTTÄJIÄ:</H1>
 <br>
 <br>
-KÄYTTÄJÄT:
+TAVALLISET KÄYTTÄJÄT:
 <br>
 {% for user in users %}
 <p>{{ user.username }} -- {{ user.access_level }} 

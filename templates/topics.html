@@ -2,10 +2,15 @@
 {% block title %}keskustelut{% endblock %}
 {% block content %}
 
-<p style="color: rgb(44, 97, 241)">Olet aihealueella <i>"{{ topicareaname }}"</i></p>
-<a href="/{{ topicareaid }}/newtopic"  style="color: rgb(44, 97, 241)">aloita uusi keskustelu</a> <a href="/"  style="color: rgb(44, 97, 241)">palaa aihealueisiin</a>
+<h1 style="color: rgb(0, 0, 0)">Olet aihealueella <i>"{{ topicareaname }}"</h1></p>
+<nav>
+    <ul>
+      <li><a href="/{{ topicareaid }}/newtopic"> Aloita uusi keskustelu</a></li>
+    </ul>
+</nav>
+
 <hr>
-<h2>KESKUSTELUT:</h2>
+<h2>Keskustelut:</h2>
 
 {% for topic in topics %}
 
