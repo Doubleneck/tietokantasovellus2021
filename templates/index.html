@@ -1,16 +1,15 @@
 {% if session.access_level == "admin" %}
 <p>Olet kirjautuneena roolissa ADMIN</p>
 <a href="/admin">To admin page</a>
+<br>
+<a href="/newtopicarea">Lisää Aihealue</a>
 {% endif %}
 
 {% if session.user_id %}
 <p>Olet kirjautunut nimellä: <i>{{ logged }}</i> </p>
 <p>Olet kävijä nro: {{ counter }}</p>
 
-
-
-
-
+<br>
 
 <hr>
 <p>KESKUSTELUALUEET:</p>
@@ -25,9 +24,14 @@ AIHEALUE: {{ topicarea[1] }}, KETJUJA:
   
   {% endif %}     
 <a href="/{{ topicarea[0]}}">Go!</a>
-
 <hr>
 {% endfor %}
+
+{% if session.access_level == "admin" or  session.access_level == "puser" %}
+<p>NÄKYY ADMIN JA PUSER</p>
+
+{% endif %} 
+<hr>
 <br>
 <a href="/logout">Kirjaudu ulos</a>
 <br>
