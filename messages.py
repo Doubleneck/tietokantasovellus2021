@@ -3,19 +3,28 @@ from db import db
 import users
 
 def get_topicareas():
-    '''for starting page: counts for messages,chains and lastmessagetime in every topicarea'''
+    '''for starting page: counts for messages,chains and lastmessagetime in non-secret topicarea'''
     result = db.session.execute("SELECT id , name FROM topicareas where visible=True and secret=False")
     topicareas = result.fetchall()
     list=[]
     for t in topicareas:
         list.append((t[0],t[1],count_messages(t[0]),count_chains(t[0]),last_messagetime(t[0])))
-    return list
+    return list    
 
 def add_newtopicarea(topicarea_name):
     '''creates new topicarea, only admin allowed'''
     sql = "INSERT INTO topicareas (name,visible,secret) VALUES (:name,True,False)"
     db.session.execute(sql, {"name":topicarea_name})
     db.session.commit()
+
+def get_secrettopicareas():
+    '''for starting page: counts for messages,chains and lastmessagetime in secret topicarea'''
+    result = db.session.execute("SELECT id , name FROM topicareas where visible=True and secret=True")
+    topicareas = result.fetchall()
+    list=[]
+    for t in topicareas:
+        list.append((t[0],t[1],count_messages(t[0]),count_chains(t[0]),last_messagetime(t[0])))
+    return list    
 
 def add_secrettopicarea(topicarea_name):
     '''creates new secret topicarea, only admin allowed'''
