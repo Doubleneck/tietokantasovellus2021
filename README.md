@@ -31,7 +31,9 @@ Admintunnukset: testaaja1: 1234 Usertunnukset (voi myös rekisteröityä itse): 
 - [ ] ulkoasu
 - [ ] syötteentarkistukset
 - [ ] tietoturva: CSRF 
-- [ ] Käyttäjä voi muokata luomansa ketjun otsikkoa. 
+- [ ] Käyttäjä voi muokata luomansa ketjun otsikkoa. ¨
+- [ ] Admin voi muokata ketjun otsikkoa. ¨
+
 
 
 

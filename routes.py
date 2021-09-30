@@ -159,7 +159,14 @@ def delete_topic(topicarea_id,topic_id):
     messages.delete_messages(topic_id)
     messages.delete_topic(topic_id)        
     return redirect("/"+str(topicarea_id))
-    
+
+@app.route("/<int:topicarea_id>/<int:topic_id>/edit", methods=["POST"])
+def edit_topic(topicarea_id,topic_id):
+    '''edit topic = messages title (owner or admin)'''    
+    #messages.is_topicowner(topic_id) or users.is_admin():
+    content=request.form["content"]
+    messages.edit_topic(topic_id, content)  
+    return redirect("/"+str(topicarea_id)+"/"+str(topic_id))
            
 
 @app.route("/<int:topicarea_id>/<int:topic_id>/<int:message_id>", methods=["POST"])

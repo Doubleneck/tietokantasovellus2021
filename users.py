@@ -26,7 +26,7 @@ def username():
         result = db.session.execute(sql, {"id":user_id})
         return result.fetchone()[0]
     else:
-        return "No user"# REMOVE FROM PROD VERSION  
+        return "No user"# REMOVE FROM PROD VERSION
 
 def logout():
     del session["user_id"]
@@ -34,7 +34,8 @@ def logout():
 
 def register(username,password):
     hash_value = generate_password_hash(password)
-    sql = "INSERT INTO users (username, password, access_level) VALUES (:username, :password, 'user')"
+    sql = ("INSERT INTO users (username, password, access_level) VALUES "
+           "(:username, :password, 'user')")
     db.session.execute(sql, {"username":username, "password":hash_value})
     db.session.commit()
 
@@ -43,20 +44,20 @@ def username_available (username):
     result = db.session.execute(sql, {"username":username})
     user = result.fetchone()
     return not user
-    
-def is_admin():   
+
+def is_admin():
     return session["access_level"] == "admin"
 
-def is_puser():  
-    "evaluates if user is priviledged user (puser)" 
-    return session["access_level"] == "puser"    
-      
-def add_puser(user_id): 
+def is_puser():
+    "evaluates if user is priviledged user (puser)"
+    return session["access_level"] == "puser"
+
+def add_puser(user_id):
     sql = "UPDATE users SET access_level = 'puser' where id=:user_id"
     db.session.execute(sql, {"user_id":user_id})
     db.session.commit()
 
-def remove_puser(user_id): 
+def remove_puser(user_id):
     sql = "UPDATE users SET access_level = 'user' where id=:user_id"
     db.session.execute(sql, {"user_id":user_id})
     db.session.commit()
