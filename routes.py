@@ -163,12 +163,7 @@ def result(topicarea_id,topic_id):
     except:
         return "Not allowed"       
 
-@app.route("/secretarea")
-def secret_area():
-    if users.is_puser() or users.is_admin():
-        return render_template("secret.html")
-    else:
-        return "Ei sallittu"    
+   
 
 @app.route("/admin/users/<int:user_id>/", methods=["POST"])
 def add_puser(user_id):
@@ -190,4 +185,14 @@ def remove_topicarea(topicarea_id):
             return "ei sallittu"    
     except:
         return "Not allowed"        
+
+@app.route("/secretarea")
+def secret_area():
+    try:
+        if users.is_puser() or users.is_admin():
+            return render_template("secret.html")
+        else:
+            return "Ei sallittu"   
+    except:
+        return "Not allowed"               
 
