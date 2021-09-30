@@ -4,12 +4,13 @@ import users
 
 def get_topicareas():
     '''for starting page: counts for messages,chains and lastmessagetime in non-secret topicarea'''
-    result = db.session.execute("SELECT id , name FROM topicareas where visible=True and secret=False")
+    result = db.session.execute("SELECT id , name FROM topicareas where "
+                                "visible=True and secret=False")
     topicareas = result.fetchall()
     list=[]
     for t in topicareas:
         list.append((t[0],t[1],count_messages(t[0]),count_chains(t[0]),last_messagetime(t[0])))
-    return list    
+    return list
 
 def add_newtopicarea(topicarea_name):
     '''creates new topicarea, only admin allowed'''
@@ -19,24 +20,25 @@ def add_newtopicarea(topicarea_name):
 
 def get_secrettopicareas():
     '''for starting page: counts for messages,chains and lastmessagetime in secret topicarea'''
-    result = db.session.execute("SELECT id , name FROM topicareas where visible=True and secret=True")
+    result = db.session.execute("SELECT id , name FROM topicareas where "
+                                "visible=True and secret=True")
     topicareas = result.fetchall()
     list=[]
     for t in topicareas:
         list.append((t[0],t[1],count_messages(t[0]),count_chains(t[0]),last_messagetime(t[0])))
-    return list    
+    return list
 
 def add_secrettopicarea(topicarea_name):
     '''creates new secret topicarea, only admin allowed'''
     sql = "INSERT INTO topicareas (name,visible,secret) VALUES (:name,True,True)"
     db.session.execute(sql, {"name":topicarea_name})
-    db.session.commit()    
+    db.session.commit()
 
 def delete_topicarea(topicarea_id):
     '''deletes topicarea, only admin allowed'''
     sql = "UPDATE topicareas SET visible = False where id=:topicarea_id"
     db.session.execute(sql, {"topicarea_id":topicarea_id})
-    db.session.commit()    
+    db.session.commit()
 
 def get_topicareaname(topicarea_id):
     '''name for topicarea'''
@@ -50,7 +52,7 @@ def get_topics(topicarea_id):
     sql = "SELECT id , name, user_id FROM topics WHERE topicarea_id=:id and visible=True"
     result = db.session.execute(sql, {"id":topicarea_id})
     selected_topics = result.fetchall()
-    return selected_topics    
+    return selected_topics
 
 def add_newtopic (topicarea_id,user_id,topic_name,message_content):
     '''adds new topic, adds also the first message under this topic'''
@@ -69,13 +71,13 @@ def delete_topic(topic_id):
     '''deletes topic, admin , owner allowed'''
     sql = "UPDATE topics SET visible = False where id=:topic_id"
     db.session.execute(sql, {"topic_id":topic_id})
-    db.session.commit()  
+    db.session.commit()
 
 def edit_topic(topic_id, content):
-    '''edit topic, admin , owner allowed'''  
+    '''edit topic, admin , owner allowed'''
     sql = "UPDATE topics SET name=:content where id=:topic_id"
     db.session.execute(sql, {"topic_id":topic_id,"content":content})
-    db.session.commit()      
+    db.session.commit()
 
 def is_topicowner(topic_id):
     sql = "SELECT user_id FROM topics where id =:topic_id"
@@ -87,7 +89,7 @@ def delete_messages(topic_id):
     '''deletes messages by topic id'''
     sql = "UPDATE messages SET visible = FALSE WHERE topics_id=:topic_id"
     db.session.execute(sql,{"topic_id":topic_id})
-    db.session.commit()    
+    db.session.commit()
 
 def new_message(topic_id,content,user_id):
     '''creates new message'''
@@ -106,7 +108,7 @@ def edit_message(message_id, new_content):
     '''updates message'''
     sql = "UPDATE messages SET content =:new_content WHERE id=:message_id"
     db.session.execute(sql,{"message_id":message_id,"new_content":new_content})
-    db.session.commit()    
+    db.session.commit()
 
 def get_topicname(topic_id):
     '''returns topic name by id'''
@@ -127,7 +129,7 @@ def view_messages(topic_id):
     sql = ("SELECT M.id,M.content, U.username, M.created_at, M.user_id FROM messages M, users U "
            "WHERE M.user_id=U.id AND topics_id=:topic_id AND visible=TRUE ORDER BY ID DESC")
     result = db.session.execute(sql, {"topic_id":topic_id})
-    selected_messages= result   
+    selected_messages= result
     return selected_messages
 
 def count_topicmessages(topic_id):
