@@ -9,10 +9,8 @@ Tietokantojen harjoitustyö HY 2021/Keskustelusovellus:
 
 Sovelluksessa näkyy keskustelualueita, joista jokaisella on tietty aihe. Alueilla on keskusteluketjuja, jotka muodostuvat viesteistä. Jokainen käyttäjä on peruskäyttäjä tai ylläpitäjä.
 
-VÄLIPALAUTUS 2:
 
-Githubin readme päivitetty, siitä selviää projektin tämänhetkinen tila. Unohdin mainita, että syötteentarkistukset on tekemättä joten aika ankeita viestejä/käyttäjänimiä jne menee läpi.
-
+Githubin readme päivitetty, siitä selviää projektin tämänhetkinen tila. 
 Heroku:
 
 https://tsoha2021vuorenmaa.herokuapp.com/
@@ -27,18 +25,15 @@ Admintunnukset: testaaja1: 1234 Usertunnukset (voi myös rekisteröityä itse): 
 - [x] Ylläpitäjä voi lisätä ja poistaa keskustelualueita.
 - [x] Käyttäjä voi poistaa viestin.
 - [x] tietoturva: roolit, ja SQL-injektio, XSS.
-- [ ] tietoturva: CSRF 
-- [ ] Käyttäjä voi poistaa ketjun
-- [ ] Käyttäjä voi muokata luomansa ketjun otsikkoa sekä lähettämänsä viestin sisältöä.
-- [ ] Ylläpitäjä voi luoda salaisen alueen ja määrittää, keillä käyttäjillä on pääsy alueelle.
+- [x] Käyttäjä voi muokata lähettämänsä viestin sisältöä.
+- [x] Ylläpitäjä voi luoda salaisen alueen ja määrittää, keillä käyttäjillä on pääsy alueelle.
 - [ ] ulkoasu
 - [ ] syötteentarkistukset
+- [ ] tietoturva: CSRF 
+- [ ] Käyttäjä voi poistaa ketjun
+- [ ] Käyttäjä voi muokata luomansa ketjun otsikkoa. 
 
 
-23.09.2021, 17:18:19
-Antti Vuorenmaa
-Ai niin, koska olen melko noviisi näissä ottaisin mieluusti vastaan (kriittistäkin) palautetta myös koodin muodollisesta oikeellisuudesta ja committien tyylistä, että sais alusta asti opeteltua Pythonia/Gittiä ettei tuu spagettia.
 
-Kiitos!
 
 
