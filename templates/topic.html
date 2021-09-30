@@ -21,7 +21,7 @@ Luotu: {{ message.created_at.strftime("%Y-%m-%d %H:%M:%S") }}<br>
 
 
 <form action="/{{ topicareaid }}/{{ topicid }}/{{ message.id }}/edit" method="POST">
-    <textarea name="content" rows="3" cols="40"></textarea>
+    <textarea name="content" rows="3" cols="40">{{ message.content }}</textarea>
     <br>
     <input type="submit" value="Edit">
     </form>
