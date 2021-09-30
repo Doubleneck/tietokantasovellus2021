@@ -27,10 +27,10 @@ Admintunnukset: testaaja1: 1234 Usertunnukset (voi myös rekisteröityä itse): 
 - [x] tietoturva: roolit, ja SQL-injektio, XSS.
 - [x] Käyttäjä voi muokata lähettämänsä viestin sisältöä.
 - [x] Ylläpitäjä voi luoda salaisen alueen ja määrittää, keillä käyttäjillä on pääsy alueelle.
+- [x] Käyttäjä ja ylläpitäjä voi poistaa ketjun
 - [ ] ulkoasu
 - [ ] syötteentarkistukset
 - [ ] tietoturva: CSRF 
-- [ ] Käyttäjä voi poistaa ketjun
 - [ ] Käyttäjä voi muokata luomansa ketjun otsikkoa. 
 
 
