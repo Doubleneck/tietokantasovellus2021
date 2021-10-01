@@ -73,7 +73,7 @@ def admin_page():
         if users.is_admin():
             return render_template("admin.html", users=users_list, pusers=pusers_list)
         else:
-            return render_template("error.html", message="Ei oikeutta nähdä sivua")
+            return "Ei oikeutta nähdä sivua"
     except:
         return "Not allowed"
 
@@ -134,9 +134,17 @@ def add_newtopic(topicarea_id):
         if request.method == "POST":
             name = request.form["title"]
             message_content = request.form["content"]
-            user_id = users.user_id()
-            topic_id = messages.add_newtopic (topicarea_id, user_id,name, message_content)
-            return redirect("/"+str(topicarea_id)+"/"+str(topic_id))
+            if utils.validate_topic(name):
+                if utils.validate_message(message_content):                
+                    user_id = users.user_id()
+                    topic_id = messages.add_newtopic (topicarea_id, user_id,name, message_content)
+                    return redirect("/"+str(topicarea_id)+"/"+str(topic_id))
+                else:
+                    flash("Sallittu viestin koko on 3-200 merkkiä","error")
+                return redirect(request.referrer)     
+            else:
+                flash("Keskusteluotsikon sallittu koko on 10-70 merkkiä","error")
+                return redirect(request.referrer)                    
     except:
         return "Not allowed"
 
@@ -158,8 +166,12 @@ def add_newmessage(topicarea_id,topic_id):
     try:
         content = request.form["content"]
         user_id=users.user_id()
-        messages.new_message(topic_id,content,user_id)
-        return redirect("/"+str(topicarea_id)+"/"+str(topic_id))
+        if utils.validate_message(content):
+            messages.new_message(topic_id,content,user_id)
+            return redirect("/"+str(topicarea_id)+"/"+str(topic_id))
+        else:
+            flash("Sallittu viestin koko on 3-200 merkkiä","error")
+            return redirect(request.referrer)   
     except:
         return "Not allowed"
 
@@ -174,8 +186,12 @@ def delete_topic(topicarea_id,topic_id):
 def edit_topic(topicarea_id,topic_id):
     '''edit topic = messages title (owner or admin)'''
     content=request.form["content"]
-    messages.edit_topic(topic_id, content)
-    return redirect("/"+str(topicarea_id)+"/"+str(topic_id))
+    if utils.validate_topic(content):
+        messages.edit_topic(topic_id, content)
+        return redirect("/"+str(topicarea_id)+"/"+str(topic_id))
+    else:
+        flash("Keskusteluotsikon sallittu koko on 10-70 merkkiä","error")
+        return redirect(request.referrer) 
 
 @app.route("/<int:topicarea_id>/<int:topic_id>/<int:message_id>", methods=["POST"])
 def delete_message (topicarea_id,topic_id,message_id):
@@ -191,13 +207,18 @@ def edit_message (topicarea_id,topic_id,message_id):
     try:
         if messages.is_messageowner(message_id) or users.is_admin():
             new_content = request.form["content"]
-            messages.edit_message(message_id,new_content)
+            if utils.validate_message(new_content):
+                messages.edit_message(message_id,new_content)
+            else:
+                flash("Sallittu viestin koko on 3-200 merkkiä","error")
+                return redirect(request.referrer)
         return redirect("/"+str(topicarea_id)+"/"+str(topic_id))
     except:
         return "Not allowed"
 
 @app.route("/<int:topicarea_id>/<int:topic_id>/result/")
 def result(topicarea_id,topic_id):
+    '''search function'''
     try:
         query = request.args["query"]
         sql = ("SELECT created_at, topics_id, U.username, content FROM messages M, Users U "
