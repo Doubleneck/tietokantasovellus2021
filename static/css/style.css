@@ -31,6 +31,7 @@ nav li a {
 
 form {
     border-radius: .5em;
+    padding: 1 em;
     float: right;
 }
 
