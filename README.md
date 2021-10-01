@@ -28,10 +28,10 @@ Admintunnukset: testaaja1: 1234 Usertunnukset (voi myös rekisteröityä itse): 
 - [x] Käyttäjä voi muokata lähettämänsä viestin sisältöä.
 - [x] Ylläpitäjä voi luoda salaisen alueen ja määrittää, keillä käyttäjillä on pääsy alueelle.
 - [x] Käyttäjä ja ylläpitäjä voi poistaa ketjun
-- [x] Käyttäjä voi muokata luomansa ketjun otsikkoa. ¨
-- [x] Admin voi muokata ketjun otsikkoa. ¨
-- [ ] ulkoasu
-- [ ] syötteentarkistukset
+- [x] Käyttäjä voi muokata luomansa ketjun otsikkoa. 
+- [x] Admin voi muokata ketjun otsikkoa. 
+- [x] syötteentarkistukset: username, password, message, topic (=message chain title)
+- [x] ulkoasu
 - [ ] tietoturva: CSRF 
 
 
