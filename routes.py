@@ -20,8 +20,7 @@ def index():
 @app.route("/login", methods=["POST"])
 def login():
     '''user and admin login'''
-    username = request.form["username"]
-    
+    username = request.form["username"]   
     password = request.form["password"]
     if users.login(username, password):
         visits.add_visit()
@@ -29,7 +28,6 @@ def login():
     else:
         flash("Käyttäjätunnus tai salasana ei täsmää, muistithan isot ja pienet kirjaimet?","error")
         return redirect(request.referrer) #referrer palauttaa sivulle josta pyyntö tuli
-       # return render_template("error.html", message="Väärä tunnus tai salasana")
 
 @app.route("/logout")
 def logout():
@@ -50,19 +48,21 @@ def register():
     '''user registration'''
     username = request.form["username"]
     password = request.form["password"]
-    if utils.validate_username(username):  
-        if users.username_available(username):            
+    if utils.validate_username(username):
+        if users.username_available(username):
             if utils.validate_password(password):
                 users.register(username,password)
                 return redirect("/registerok")
             else:
-                flash("Salasana saa sisältää vain kirjaimia (ei skandeja) ja numeroita, ja sen pitää olla vähintää 6 merkkiä pitkä","error")  
+                flash("Salasana saa sisältää vain kirjaimia (ei skandeja) " 
+                      "ja numeroita, ja sen pitää olla vähintää 6 merkkiä pitkä","error")
                 return redirect(request.referrer)     
         else:
             flash("Käyttäjätunnus on varattu","error") 
             return redirect(request.referrer)   
     else:
-        flash("Käyttäjätunnus saa sisältää vain kirjaimia (ei skandeja) ja numeroita, ja sen pitää olla vähintää 6 merkkiä pitkä","error") 
+        flash("Käyttäjätunnus saa sisältää vain kirjaimia (ei skandeja) ja numeroita, "
+            " ja sen pitää olla vähintää 6 merkkiä pitkä","error") 
         return redirect(request.referrer)
 
 @app.route("/admin")
