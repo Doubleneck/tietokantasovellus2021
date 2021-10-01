@@ -23,6 +23,7 @@
 <form action="/admin/remove/{{ topicarea[0] }}" method="POST">
   <br>    
   <input type="submit" value="poista">
+  <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>  
 {% endif %}     
 <hr>
@@ -35,6 +36,7 @@
   {% if session.access_level == "admin" %}
     <form action="/admin/remove/{{ secretarea[0] }}" method="POST">   
       <input type="submit" value="poista">
+      <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
     </form>  
   {% endif %}      
   <hr>
