@@ -49,9 +49,10 @@ def get_topicareaname(topicarea_id):
 
 def get_topics(topicarea_id):
     '''all topics in topicarea'''
-    sql = "SELECT id , name, user_id FROM topics WHERE topicarea_id=:id and visible=True"
+    sql = "SELECT id , name, user_id FROM topics WHERE topicarea_id=:id and visible=True ORDER BY ID DESC"
     result = db.session.execute(sql, {"id":topicarea_id})
     selected_topics = result.fetchall()
+    print("täällä")
     return selected_topics
 
 def add_newtopic (topicarea_id,user_id,topic_name,message_content):
