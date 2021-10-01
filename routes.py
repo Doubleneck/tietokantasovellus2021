@@ -1,3 +1,4 @@
+from os import abort
 from flask import render_template,redirect,request,flash,session
 from db import db
 from app import app
@@ -6,16 +7,17 @@ import secrets
 
 @app.route("/")
 def index():
-    try:
+    try:         
         logged_user = users.username()
         visitscounter = visits.get_counter()
         topic_areas = messages.get_topicareas()
         secret_topicareas=[]
         if users.is_admin() or users.is_puser:
             secret_topicareas = messages.get_secrettopicareas()
-        return render_template("index.html", counter=visitscounter, logged=logged_user,
-        count=len(topic_areas), topicareas=topic_areas, secretareas=secret_topicareas)
+            return render_template("index.html", counter=visitscounter, logged=logged_user,
+            count=len(topic_areas), topicareas=topic_areas, secretareas=secret_topicareas)
     except:
+        print("HALOO")
         return render_template("index.html")
 
 @app.route("/login", methods=["POST"])
@@ -90,8 +92,10 @@ def add_newtopicarea():
     try:
         if users.is_admin():
             if request.method == "GET":
-                return render_template("newtopicarea.html")
+                return render_template("newtopicarea.html")               
             if request.method == "POST":
+                if session["csrf_token"] != request.form["csrf_token"]:            
+                    abort(403) 
                 topicarea_name = request.form["content"]
                 messages.add_newtopicarea(topicarea_name)
                 return redirect("/")
@@ -108,6 +112,8 @@ def newsecret_area():
             if request.method == "GET":
                 return render_template("newtopicarea.html")
             if request.method == "POST":
+                if session["csrf_token"] != request.form["csrf_token"]:            
+                    abort(403) 
                 topicarea_name = request.form["secretcontent"]
                 messages.add_secrettopicarea(topicarea_name)
                 return redirect("/")
@@ -134,6 +140,8 @@ def add_newtopic(topicarea_id):
         if request.method == "GET":
             return render_template("newtopic.html", topicareaid=topicarea_id)
         if request.method == "POST":
+            if session["csrf_token"] != request.form["csrf_token"]:            
+                    abort(403) 
             name = request.form["title"]
             message_content = request.form["content"]
             if utils.validate_topic(name):
@@ -168,6 +176,8 @@ def add_newmessage(topicarea_id,topic_id):
     try:
         content = request.form["content"]
         user_id=users.user_id()
+        if session["csrf_token"] != request.form["csrf_token"]:            
+                    abort(403) 
         if utils.validate_message(content):
             messages.new_message(topic_id,content,user_id)
             return redirect("/"+str(topicarea_id)+"/"+str(topic_id))
@@ -180,6 +190,8 @@ def add_newmessage(topicarea_id,topic_id):
 @app.route("/<int:topicarea_id>/<int:topic_id>/delete", methods=["POST"])
 def delete_topic(topicarea_id,topic_id):
     '''deletes topic (owner or admin)'''
+    if session["csrf_token"] != request.form["csrf_token"]:            
+                    abort(403) 
     messages.delete_messages(topic_id)
     messages.delete_topic(topic_id)
     return redirect("/"+str(topicarea_id))
@@ -187,6 +199,8 @@ def delete_topic(topicarea_id,topic_id):
 @app.route("/<int:topicarea_id>/<int:topic_id>/edit", methods=["POST"])
 def edit_topic(topicarea_id,topic_id):
     '''edit topic = messages title (owner or admin)'''
+    if session["csrf_token"] != request.form["csrf_token"]:            
+                    abort(403) 
     content=request.form["content"]
     if utils.validate_topic(content):
         messages.edit_topic(topic_id, content)
@@ -198,6 +212,8 @@ def edit_topic(topicarea_id,topic_id):
 @app.route("/<int:topicarea_id>/<int:topic_id>/<int:message_id>", methods=["POST"])
 def delete_message (topicarea_id,topic_id,message_id):
     try:
+        if session["csrf_token"] != request.form["csrf_token"]:            
+                    abort(403) 
         if messages.is_messageowner(message_id) or users.is_admin():
             messages.delete_message(message_id)
         return redirect("/"+str(topicarea_id)+"/"+str(topic_id))
@@ -207,6 +223,8 @@ def delete_message (topicarea_id,topic_id,message_id):
 @app.route("/<int:topicarea_id>/<int:topic_id>/<int:message_id>/edit", methods=["POST"])
 def edit_message (topicarea_id,topic_id,message_id):
     try:
+        if session["csrf_token"] != request.form["csrf_token"]:            
+                    abort(403) 
         if messages.is_messageowner(message_id) or users.is_admin():
             new_content = request.form["content"]
             if utils.validate_message(new_content):
@@ -235,17 +253,23 @@ def result(topicarea_id,topic_id):
 
 @app.route("/admin/users/<int:user_id>/", methods=["POST"])
 def add_puser(user_id):
+    if session["csrf_token"] != request.form["csrf_token"]:            
+                    abort(403) 
     users.add_puser(user_id)
     return redirect("/admin")
 
 @app.route("/admin/pusers/<int:user_id>/", methods=["POST"])
 def remove_puser(user_id):
+    if session["csrf_token"] != request.form["csrf_token"]:            
+                    abort(403) 
     users.remove_puser(user_id)
     return redirect("/admin")
 
 @app.route("/admin/remove/<int:topicarea_id>/", methods=["POST"])
 def remove_topicarea(topicarea_id):
     try:
+        if session["csrf_token"] != request.form["csrf_token"]:            
+                    abort(403) 
         if users.is_admin():
             messages.delete_topicarea(topicarea_id)
             return redirect("/")
