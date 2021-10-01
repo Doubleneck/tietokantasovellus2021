@@ -11,6 +11,7 @@ TAVALLISET KÄYTTÄJÄT:
 <p>{{ user.username }} -- {{ user.access_level }} 
 <form action="/admin/users/{{ user.id }}" method="POST">    
   <input type="submit" value="Anna oikeudet salatulle alueelle">
+  <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
 <hr>
 </p>
@@ -23,6 +24,7 @@ KÄYTTÄJÄT SALATUILLA OIKEUKSILLA:
 <p>{{ user.username }} -- {{ user.access_level }} käyttäjä id: {{ user.id }}   
 <form action="/admin/pusers/{{ user.id }}" method="POST">    
   <input type="submit" value="Poista oikeudet salatulle alueelle">
+  <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
 <hr>
 </p>

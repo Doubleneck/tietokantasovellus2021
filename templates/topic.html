@@ -6,6 +6,7 @@
 <form action="/{{ topicareaid }}/{{ topicid }}/result" method="GET">
   <input type="text" name="query">
   <input type="submit" value="hae ketjusta">
+  <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
 <nav>
   <ul>
@@ -18,10 +19,12 @@
   <form action="/{{ topicareaid }}/{{ topicid }}/edit" method="POST">
     <textarea name="content" rows="2" cols="40">{{ topicname }}</textarea>
     <input type="submit" value="muokkaa otsikkoa">
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
   </form>
   <br>
   <form action="/{{ topicareaid }}/{{ topicid }}/delete" method="POST">    
     <input type="submit" value="poista keskustelu">
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
   </form>
   <br>
 {% endif  %}
@@ -32,6 +35,7 @@
 <form action="/{{ topicareaid }}/{{ topicid }}/addnewmessage" method="POST">
   <textarea name="content" rows="5" cols="30"></textarea>  
   <input type="submit" value="Kirjoita uusi viesti">
+  <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
 <hr>  
 {% with messages = get_flashed_messages(with_categories=true) %}
@@ -49,10 +53,12 @@
   <form action="/{{ topicareaid }}/{{ topicid }}/{{ message.id }}/edit" method="POST">
     <textarea name="content" rows="2" cols="40">{{ message.content }}</textarea>
     <input type="submit" value="muokkaa">
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
   </form>
   <br>
   <form action="/{{ topicareaid }}/{{ topicid }}/{{ message.id }}" method="POST">   
     <input type="submit" value="poista viesti">
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
   </form>
   {% endif%}  
 <hr>

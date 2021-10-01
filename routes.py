@@ -1,7 +1,8 @@
-from flask import render_template,redirect,request, flash
+from flask import render_template,redirect,request,flash,session
 from db import db
 from app import app
 import visits,users,messages,utils
+import secrets
 
 @app.route("/")
 def index():
@@ -23,6 +24,7 @@ def login():
     username = request.form["username"]   
     password = request.form["password"]
     if users.login(username, password):
+        session["csrf_token"] = secrets.token_hex(16)
         visits.add_visit()
         return redirect("/")
     else:
