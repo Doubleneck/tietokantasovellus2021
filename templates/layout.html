@@ -3,20 +3,16 @@
 <head>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
-
 <title>Lemmikkifoorumi - {% block title %}{% endblock %}</title>
-
 <div class="header" style="width: 100%">
-            <h1>Lemmikkifoorumi</h1>
-
+  <h1>Lemmikkifoorumi</h1>
 </div>
 <nav>
-    <ul>
-      <li><a href="/">Etusivu</a></li>
-      <li><a href="/logout">kirjaudu ulos</a></li>
-    </ul>
+  <ul>
+    <li><a href="/">Etusivu</a></li>
+    <li><a href="/logout">kirjaudu ulos</a></li>
+  </ul>
 </nav>
-
 <hr>
 {% block content %}{% endblock %}
 <hr>

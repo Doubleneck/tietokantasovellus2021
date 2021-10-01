@@ -1,17 +1,17 @@
+<!doctype html>
 {% extends "layout.html" %}
 {% block title %}uusi aihealue{% endblock %}
 {% block content %}
 <form action="/newtopicarea" method="POST">
-Uusi aihealue: <br>
-<textarea name="content" rows="3" cols="40"></textarea>
-<br>
-<input type="submit" value="Lähetä">
+  Uusi aihealue: <br>
+  <textarea name="content" rows="3" cols="40"></textarea>
+  <br>
+  <input type="submit" value="Lähetä">
 </form>
 <form action="/newsecrettopicarea" method="POST">
-    Uusi salainen aihealue: <br>
-    <textarea name="secretcontent" rows="3" cols="40"></textarea>
-    <br>
-    <input type="submit" value="Lähetä">
-    </form>
-       
-    {% endblock %}    
+  Uusi salainen aihealue: <br>
+  <textarea name="secretcontent" rows="3" cols="40"></textarea>
+  <br>
+  <input type="submit" value="Lähetä">
+</form>       
+{% endblock %}    

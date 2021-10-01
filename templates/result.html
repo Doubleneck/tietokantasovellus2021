@@ -1,19 +1,21 @@
+<!doctype html>
 {% extends "layout.html" %}
 {% block title %}hakutulokset{% endblock %}
 {% block content %}
-
-{% for message in messages %}<br>
+<nav>
+  <ul>
+    <li><a href="/{{ topicareaid }}/{{ topicid }}">Palaa viesteihin</a></li>
+    <li><a href="/">Palaa aihealueisiin:</a></li>
+  </ul>
+</nav>
+{% for message in messages %}
+<br>
 Käyttäjä <i>{{ message[2]}}</i> kirjoitti :"{{ message.content }}"<br>
 Luotu: {{ message.created_at.strftime("%Y-%m-%d %H:%M:%S") }}<br>
-
 {% endfor %}
 <br>
-
-<a href="/{{ topicareaid }}/{{ topicid }}">Palaa viesteihin</a>
 <br>
 <br>
-<a href="/">Palaa aihealueisiin:</a>
 <br>
 <br>
-
 {% endblock %}

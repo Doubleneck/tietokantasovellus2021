@@ -1,34 +1,19 @@
+<!doctype html>
 {% extends "layout.html" %}
 {% block title %}keskustelut{% endblock %}
 {% block content %}
-
 <h1 style="color: rgb(0, 0, 0)">Olet aihealueella <i>"{{ topicareaname }}"</h1></p>
 <nav>
-    <ul>
-      <li><a href="/{{ topicareaid }}/newtopic"> Aloita uusi keskustelu</a></li>
-    </ul>
+  <ul>
+    <li><a href="/{{ topicareaid }}/newtopic"> Aloita uusi keskustelu</a></li>
+  </ul>
 </nav>
-
 <hr>
 <h2>Keskustelut:</h2>
-
 {% for topic in topics %}
-
-<a href="/{{ topicareaid }}/{{ topic.id }}" style="color: rgb(44, 97, 241)">{{ topic.name }}</a>
-<br>
- 
-
-
-   
-    
-
-
-<br>
+  <a href="/{{ topicareaid }}/{{ topic.id }}" style="color: rgb(44, 97, 241)">{{ topic.name }}</a>
+  <br>
+  <br>
 {% endfor %}
-
-
-
-
 <br>
-
 {% endblock %}

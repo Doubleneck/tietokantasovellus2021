@@ -1,17 +1,12 @@
+<!doctype html>
 {% extends "layout.html" %}
 {% block title %}Etusivu{% endblock %}
 {% block content %}
-
-
-
-
-
-
 <p>Aloita uusi keskustelu: </p>  
 {% with messages = get_flashed_messages(with_categories=true) %}
-{% for category, message in messages %}
-  <div class="{{ category }}">{{ message }}</div>
-{% endfor %}
+  {% for category, message in messages %}
+    <div class="{{ category }}">{{ message }}</div>
+  {% endfor %}
 {% endwith %}
 <br>
 <form action="/{{ topicareaid }}/newtopic" method="POST">
@@ -29,4 +24,4 @@
 <br>
 <br>
 <br>
-    {% endblock %}
+{% endblock %}
