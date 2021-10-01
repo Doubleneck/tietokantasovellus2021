@@ -1,7 +1,7 @@
-from flask import render_template,redirect,request
+from flask import render_template,redirect,request, flash
 from db import db
 from app import app
-import visits,users,messages
+import visits,users,messages,utils
 
 @app.route("/")
 def index():
@@ -21,12 +21,15 @@ def index():
 def login():
     '''user and admin login'''
     username = request.form["username"]
+    
     password = request.form["password"]
     if users.login(username, password):
         visits.add_visit()
         return redirect("/")
     else:
-        return render_template("error.html", message="Väärä tunnus tai salasana")
+        flash("Käyttäjätunnus tai salasana ei täsmää, muistithan isot ja pienet kirjaimet?","error")
+        return redirect(request.referrer) #referrer palauttaa sivulle josta pyyntö tuli
+       # return render_template("error.html", message="Väärä tunnus tai salasana")
 
 @app.route("/logout")
 def logout():
@@ -47,11 +50,20 @@ def register():
     '''user registration'''
     username = request.form["username"]
     password = request.form["password"]
-    if users.username_available(username):
-        users.register(username,password)
-        return redirect("/registerok")
+    if utils.validate_username(username):  
+        if users.username_available(username):            
+            if utils.validate_password(password):
+                users.register(username,password)
+                return redirect("/registerok")
+            else:
+                flash("Salasana saa sisältää vain kirjaimia (ei skandeja) ja numeroita, ja sen pitää olla vähintää 6 merkkiä pitkä","error")  
+                return redirect(request.referrer)     
+        else:
+            flash("Käyttäjätunnus on varattu","error") 
+            return redirect(request.referrer)   
     else:
-        return redirect("/register")     #Error message missing so far
+        flash("Käyttäjätunnus saa sisältää vain kirjaimia (ei skandeja) ja numeroita, ja sen pitää olla vähintää 6 merkkiä pitkä","error") 
+        return redirect(request.referrer)
 
 @app.route("/admin")
 def admin_page():
