@@ -1,0 +1,27 @@
+<!doctype html>
+{% extends "layout.html" %}
+{% block title %}hakutulokset{% endblock %}
+{% block content %}
+<nav>
+  <ul>
+    <li><a href="/{{ topicareaid }}/{{ topicid }}">Palaa viesteihin</a></li>
+    <li><a href="/">Palaa aihealueisiin:</a></li>
+  </ul>
+</nav>
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% for category, message in messages %}
+    <div class="{{ category }}">{{ message }}</div>
+  {% endfor %}
+{% endwith %}
+<br>
+<form action="/{{ topicareaid }}/{{ topicid }}/edit" method="POST">
+    <textarea name="content" rows="2" cols="40">{{ topicname }}</textarea>
+    <input type="submit" value="Muokkaa otsikkoa">
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+</form>  
+{% endblock %}
+<br>
+<br>
+<br>
+<br>
+<br>

@@ -196,6 +196,11 @@ def delete_topic(topicarea_id,topic_id):
     messages.delete_topic(topic_id)
     return redirect("/"+str(topicarea_id))
 
+@app.route("/<int:topicarea_id>/<int:topic_id>/edit", methods=["GET"])
+def view_edit_topic(topicarea_id,topic_id):
+    topicname=messages.get_topicname(topic_id)
+    return render_template("renametopic.html", topicareaid=topicarea_id,topicid=topic_id,topicname=topicname)
+
 @app.route("/<int:topicarea_id>/<int:topic_id>/edit", methods=["POST"])
 def edit_topic(topicarea_id,topic_id):
     '''edit topic = messages title (owner or admin)'''
