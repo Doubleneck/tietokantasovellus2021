@@ -32,7 +32,6 @@
   <input type="submit" value="Kirjoita uusi viesti">
   <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
   </form>
-
 <br>
 <br>
 {% with messages = get_flashed_messages(with_categories=true) %}
@@ -40,25 +39,23 @@
     <div class="{{ category }}">{{ message }}</div>
   {% endfor %}
 {% endwith %}
-
+<br>
 <h2>VIESTIT:</h2>
-{% for message in messages %}<br>
+{% for message in messages %}
+  <hr>
   Käyttäjä <i>{{ message.username }}</i> kirjoitti :"{{ message.content }}"<br>
   Luotu: {{ message.created_at.strftime("%Y-%m-%d %H:%M:%S") }}<br>
-  <br> 
-  <br> 
-  {% if message.user_id == session.user_id or session.access_level == "admin" %}
-  <form action="/{{ topicareaid }}/{{ topicid }}/{{ message.id }}/edit" method="POST">
-    <textarea name="content" rows="2" cols="40">{{ message.content }}</textarea>
-    <input type="submit" value="muokkaa">
-    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
-  </form>
-  <br>
   <form action="/{{ topicareaid }}/{{ topicid }}/{{ message.id }}" method="POST">   
-    <input type="submit" value="poista viesti">
+    <input type="submit" value="Poista">
     <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
   </form>
+  {% if message.user_id == session.user_id or session.access_level == "admin" %}
+ 
+  <nav>
+    <ul>
+      <li><a href="/{{ topicareaid }}/{{ topicid }}/{{ message.id }}/edit"> Muokkaa</a></li>
+    </ul>
+  </nav>  
   {% endif%}  
-<hr>
 {% endfor %}
 {% endblock %}

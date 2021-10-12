@@ -1,6 +1,6 @@
 <!doctype html>
 {% extends "layout.html" %}
-{% block title %}uudelleennimeä keskustelu{% endblock %}
+{% block title %}muokkaa viestiä{% endblock %}
 {% block content %}
 <nav>
   <ul>
@@ -14,11 +14,11 @@
   {% endfor %}
 {% endwith %}
 <br>
-<form action="/{{ topicareaid }}/{{ topicid }}/edit" method="POST">
-    <textarea name="content" rows="2" cols="40">{{ topicname }}</textarea>
-    <input type="submit" value="Muokkaa otsikkoa">
+<form action="/{{ topicareaid }}/{{ topicid }}/{{ messageid }}/edit" method="POST">
+    <textarea name="content" rows="2" cols="40">{{ content }}</textarea>
+    <input type="submit" value="Muokkaa">
     <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
-</form>  
+</form> 
 {% endblock %}
 <br>
 <br>
