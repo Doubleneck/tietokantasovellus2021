@@ -7,12 +7,14 @@
 <div class="header" style="width: 100%">
   <h1>Lemmikkifoorumi</h1>
 </div>
+{% if session.user_id %}
 <nav>
   <ul>
     <li><a href="/">Etusivu</a></li>
     <li><a href="/logout">kirjaudu ulos</a></li>
   </ul>
 </nav>
+{% endif %}
 <hr>
 {% block content %}{% endblock %}
 <hr>
