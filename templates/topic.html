@@ -45,12 +45,12 @@
   <hr>
   Käyttäjä <i>{{ message.username }}</i> kirjoitti :"{{ message.content }}"<br>
   Luotu: {{ message.created_at.strftime("%Y-%m-%d %H:%M:%S") }}<br>
+  
+  {% if message.user_id == session.user_id or session.access_level == "admin" %}
   <form action="/{{ topicareaid }}/{{ topicid }}/{{ message.id }}" method="POST">   
     <input type="submit" value="Poista">
     <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
   </form>
-  {% if message.user_id == session.user_id or session.access_level == "admin" %}
- 
   <nav>
     <ul>
       <li><a href="/{{ topicareaid }}/{{ topicid }}/{{ message.id }}/edit"> Muokkaa</a></li>
