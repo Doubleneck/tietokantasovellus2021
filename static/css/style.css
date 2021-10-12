@@ -28,11 +28,19 @@ nav li a {
     font-size: 2em;
     border-radius: .5em;
 }
-
+input[type=button], input[type=submit], input[type=reset] {
+    display: inline-block;
+    padding: 0 .5em;
+    background: rgb(44, 97, 241);
+    border-radius: .5em;
+    margin: .2em; 
+    color: rgb(255, 255, 255);  
+  }
+  
 form {
     border-radius: .5em;
     padding: 1 em;
-    float: right;
+    float: right;    
 }
 
 .error {

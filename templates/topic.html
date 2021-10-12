@@ -2,48 +2,45 @@
 {% extends "layout.html" %}
 {% block title %}viestit{% endblock %}
 {% block content %}
-<H1 style="color: rgb(0, 0, 0)">Olet keskustelussa "<i>{{ topicname }}</i>" </H1>
 <form action="/{{ topicareaid }}/{{ topicid }}/result" method="GET">
   <input type="text" name="query">
-  <input type="submit" value="hae ketjusta">
+  <input type="submit" value="Hae ketjusta">
   <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
 <nav>
   <ul>
-    <li><a href="/{{ topicareaid }}"> palaa keskusteluihin </a></li>
+    <li><a href="/{{ topicareaid }}"> Palaa keskusteluihin </a></li>
     <li><a href="/">Palaa aihealueisiin</a></li>
   </ul>
 </nav>
-<hr>
-{% if session.access_level == "admin" or  topicuserid==session.user_id %}
-  <br>
-  <form action="/{{ topicareaid }}/{{ topicid }}/edit" method="POST">
-    <textarea name="content" rows="2" cols="40">{{ topicname }}</textarea>
-    <input type="submit" value="muokkaa otsikkoa">
-    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
-  </form>
-  <br>
+<H1 style="color: rgb(0, 0, 0)">Olet keskustelussa "<i>{{ topicname }}</i>" </H1>
+{% if session.access_level == "admin" or  topicuserid==session.user_id %} 
+<nav>
+  <ul>
+    <li><a href="/{{ topicareaid }}/{{ topicid }}/edit"> Muokkaa keskustelun otsikkoa </a></li>
+  </ul>
+</nav> 
   <form action="/{{ topicareaid }}/{{ topicid }}/delete" method="POST">    
-    <input type="submit" value="poista keskustelu">
+    <input type="submit" value="Poista keskustelu">
     <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
-  </form>
-  <br>
+  </form>  
 {% endif  %}
-<hr>
 <br>
-<hr> 
-<br>
-<form action="/{{ topicareaid }}/{{ topicid }}/addnewmessage" method="POST">
+<hr>  
+  <form action="/{{ topicareaid }}/{{ topicid }}/addnewmessage" method="POST">
   <textarea name="content" rows="5" cols="30"></textarea>  
   <input type="submit" value="Kirjoita uusi viesti">
   <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
-</form>
-<hr>  
+  </form>
+
+<br>
+<br>
 {% with messages = get_flashed_messages(with_categories=true) %}
   {% for category, message in messages %}
     <div class="{{ category }}">{{ message }}</div>
   {% endfor %}
 {% endwith %}
+
 <h2>VIESTIT:</h2>
 {% for message in messages %}<br>
   Käyttäjä <i>{{ message.username }}</i> kirjoitti :"{{ message.content }}"<br>
