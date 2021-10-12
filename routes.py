@@ -17,7 +17,6 @@ def index():
             return render_template("index.html", counter=visitscounter, logged=logged_user,
             count=len(topic_areas), topicareas=topic_areas, secretareas=secret_topicareas)
     except:
-        print("HALOO")
         return render_template("index.html")
 
 @app.route("/login", methods=["POST"])
@@ -224,6 +223,11 @@ def delete_message (topicarea_id,topic_id,message_id):
         return redirect("/"+str(topicarea_id)+"/"+str(topic_id))
     except:
         return "Not allowed"
+
+@app.route("/<int:topicarea_id>/<int:topic_id>/<int:message_id>/edit", methods=["GET"])
+def view_edit_message (topicarea_id,topic_id,message_id):
+    content=messages.get_messagecontent(message_id)
+    return render_template("editmessage.html", topicareaid=topicarea_id,topicid=topic_id, messageid=message_id, content=content)
 
 @app.route("/<int:topicarea_id>/<int:topic_id>/<int:message_id>/edit", methods=["POST"])
 def edit_message (topicarea_id,topic_id,message_id):

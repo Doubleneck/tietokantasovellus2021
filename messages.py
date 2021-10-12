@@ -111,6 +111,13 @@ def edit_message(message_id, new_content):
     db.session.execute(sql,{"message_id":message_id,"new_content":new_content})
     db.session.commit()
 
+def get_messagecontent(message_id):
+    ''' message content by message id'''
+    sql = "Select content from messages WHERE id=:message_id"
+    result=db.session.execute(sql,{"message_id":message_id})
+    return result.fetchone()[0] 
+
+
 def get_topicname(topic_id):
     '''returns topic name by id'''
     sql="SELECT name FROM topics WHERE id=:topic_id"
