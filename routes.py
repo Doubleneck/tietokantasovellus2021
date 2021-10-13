@@ -30,7 +30,7 @@ def login():
         return redirect("/")
     else:
         flash("Käyttäjätunnus tai salasana ei täsmää, muistithan isot ja pienet kirjaimet?","error")
-        return redirect(request.referrer) #referrer palauttaa sivulle josta pyyntö tuli
+        return redirect(request.referrer)
 
 @app.route("/logout")
 def logout():
@@ -262,6 +262,7 @@ def result(topicarea_id,topic_id):
 
 @app.route("/admin/users/<int:user_id>/", methods=["POST"])
 def add_puser(user_id):
+    '''adds access to secret areas'''    
     if session["csrf_token"] != request.form["csrf_token"]:            
                     abort(403) 
     users.add_puser(user_id)
