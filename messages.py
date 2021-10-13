@@ -7,7 +7,7 @@ def get_topicareas():
     result = db.session.execute("SELECT id , name FROM topicareas where "
                                 "visible=True and secret=False")
     topicareas = result.fetchall()
-    list=[]
+    list = []
     for t in topicareas:
         list.append((t[0],t[1],count_messages(t[0]),count_chains(t[0]),last_messagetime(t[0])))
     return list
@@ -23,7 +23,7 @@ def get_secrettopicareas():
     result = db.session.execute("SELECT id , name FROM topicareas where "
                                 "visible=True and secret=True")
     topicareas = result.fetchall()
-    list=[]
+    list = []
     for t in topicareas:
         list.append((t[0],t[1],count_messages(t[0]),count_chains(t[0]),last_messagetime(t[0])))
     return list
@@ -44,7 +44,7 @@ def get_topicareaname(topicarea_id):
     '''name for topicarea'''
     sql = "SELECT name FROM topicareas WHERE id=:id "
     result = db.session.execute(sql, {"id":topicarea_id})
-    topicarea_name= result.fetchone()[0]
+    topicarea_name = result.fetchone()[0]
     return topicarea_name
 
 def get_topics(topicarea_id):
@@ -52,14 +52,13 @@ def get_topics(topicarea_id):
     sql = "SELECT id , name, user_id FROM topics WHERE topicarea_id=:id and visible=True ORDER BY ID DESC"
     result = db.session.execute(sql, {"id":topicarea_id})
     selected_topics = result.fetchall()
-    print("täällä")
     return selected_topics
 
 def add_newtopic (topicarea_id,user_id,topic_name,message_content):
     '''adds new topic, adds also the first message under this topic'''
     sql = ("INSERT INTO topics (topicarea_id,name,user_id,visible) "
            "VALUES (:topicarea_id,:name,:user_id,TRUE) returning id")
-    res=db.session.execute(sql, {"name":topic_name,"topicarea_id":topicarea_id,"user_id":user_id})
+    res = db.session.execute(sql, {"name":topic_name,"topicarea_id":topicarea_id,"user_id":user_id})
     topic_id = res.fetchone()[0]
     sql2 = ("INSERT INTO messages (topics_id, content, created_at, user_id, visible) "
             "VALUES (:topic_id, :content, NOW(), :user_id, TRUE)")
@@ -113,22 +112,21 @@ def edit_message(message_id, new_content):
 def get_messagecontent(message_id):
     ''' message content by message id'''
     sql = "Select content from messages WHERE id=:message_id"
-    result=db.session.execute(sql,{"message_id":message_id})
+    result = db.session.execute(sql,{"message_id":message_id})
     return result.fetchone()[0] 
-
 
 def get_topicname(topic_id):
     '''returns topic name by id'''
-    sql="SELECT name FROM topics WHERE id=:topic_id"
+    sql = "SELECT name FROM topics WHERE id=:topic_id"
     result = db.session.execute(sql, {"topic_id":topic_id})
-    topic_name=result.fetchone()[0]
+    topic_name = result.fetchone()[0]
     return topic_name
 
 def get_topicowner(topic_id):
     '''returns topic name by id'''
-    sql="SELECT user_id FROM topics WHERE id=:topic_id"
+    sql = "SELECT user_id FROM topics WHERE id=:topic_id"
     result = db.session.execute(sql, {"topic_id":topic_id})
-    topic_owner=result.fetchone()[0]
+    topic_owner = result.fetchone()[0]
     return topic_owner
 
 def view_messages(topic_id):
@@ -136,7 +134,7 @@ def view_messages(topic_id):
     sql = ("SELECT M.id,M.content, U.username, M.created_at, M.user_id FROM messages M, users U "
            "WHERE M.user_id=U.id AND topics_id=:topic_id AND visible=TRUE ORDER BY ID DESC")
     result = db.session.execute(sql, {"topic_id":topic_id})
-    selected_messages= result
+    selected_messages = result
     return selected_messages
 
 def count_topicmessages(topic_id):
@@ -159,7 +157,7 @@ def last_messagetime(topicarea_id):
            "WHERE M.topics_id=T.id and T.topicarea_id=A.id and A.id=:topicarea_id "
            "and M.visible=TRUE order by M.created_at DESC")
     result = db.session.execute(sql, {"topicarea_id":topicarea_id})
-    ret=result.fetchone()
+    ret = result.fetchone()
     if ret == None:
         return datetime.now()
     else:
