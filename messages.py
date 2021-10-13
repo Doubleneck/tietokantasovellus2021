@@ -61,7 +61,6 @@ def add_newtopic (topicarea_id,user_id,topic_name,message_content):
            "VALUES (:topicarea_id,:name,:user_id,TRUE) returning id")
     res=db.session.execute(sql, {"name":topic_name,"topicarea_id":topicarea_id,"user_id":user_id})
     topic_id = res.fetchone()[0]
-
     sql2 = ("INSERT INTO messages (topics_id, content, created_at, user_id, visible) "
             "VALUES (:topic_id, :content, NOW(), :user_id, TRUE)")
     db.session.execute(sql2, {"topic_id":topic_id, "content":message_content,"user_id":user_id})
@@ -75,7 +74,7 @@ def delete_topic(topic_id):
     db.session.commit()
 
 def edit_topic(topic_id, content):
-    '''edit topic, admin , owner allowed'''
+    '''edit topic, admin, owner allowed'''
     sql = "UPDATE topics SET name=:content where id=:topic_id"
     db.session.execute(sql, {"topic_id":topic_id,"content":content})
     db.session.commit()
@@ -148,6 +147,7 @@ def count_topicmessages(topic_id):
     return count
 
 def is_messageowner(message_id):
+    '''checking message´s owner by id'''
     sql = "SELECT user_id FROM messages WHERE id=:message_id"
     result = db.session.execute(sql,{"message_id":message_id})
     owner = result.fetchone()[0]
