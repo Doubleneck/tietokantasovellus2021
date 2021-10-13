@@ -2,12 +2,11 @@ import re
 
 def validate_username(content):
     if re.match("^[a-zA-Z0-9]+$", content) and len(content)>=6:
-        return True  
+        return True
             
-
 def validate_password(content):
     if re.match("^[a-zA-Z0-9]+$", content) and len(content)>=6:
-        return True  
+        return True
             
 def validate_message(content):
     return len(content)>=3 and len(content)<=200         
