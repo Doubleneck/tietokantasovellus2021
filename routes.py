@@ -1,6 +1,5 @@
 from os import abort
 from flask import render_template,redirect,request,flash,session
-from db import db
 from app import app
 import visits,users,messages,utils
 import secrets
@@ -263,14 +262,14 @@ def result(topicarea_id,topic_id):
 def add_puser(user_id):
     '''adds access to secret areas'''    
     if session["csrf_token"] != request.form["csrf_token"]:            
-                    abort(403) 
+        abort(403) 
     users.add_puser(user_id)
     return redirect("/admin")
 
 @app.route("/admin/pusers/<int:user_id>/", methods = ["POST"])
 def remove_puser(user_id):
     if session["csrf_token"] != request.form["csrf_token"]:            
-                    abort(403) 
+        abort(403) 
     users.remove_puser(user_id)
     return redirect("/admin")
 
@@ -278,7 +277,7 @@ def remove_puser(user_id):
 def remove_topicarea(topicarea_id):
     try:
         if session["csrf_token"] != request.form["csrf_token"]:            
-                    abort(403) 
+            abort(403) 
         if users.is_admin():
             messages.delete_topicarea(topicarea_id)
             return redirect("/")
