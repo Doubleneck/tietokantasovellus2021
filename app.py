@@ -1,5 +1,4 @@
 '''the main app'''
-#from os import getenv
 from flask import Flask
 
 app = Flask(__name__)
