@@ -12,4 +12,4 @@ def validate_message(content):
     return len(content)>=3 and len(content)<=200         
 
 def validate_topic(content):
-    return len(content)>=10 and len(content)<=70  
+    return len(content)>=10 and len(content)<=70
