@@ -26,7 +26,7 @@ def username():
         result = db.session.execute(sql, {"id":user_id})
         return result.fetchone()[0]
     else:
-        return "No user"# REMOVE FROM PROD VERSION
+        return "No user"
 
 def logout():
     del session["user_id"]
