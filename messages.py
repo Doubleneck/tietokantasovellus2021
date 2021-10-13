@@ -176,3 +176,10 @@ def count_messages(topicarea_id):
            "and T.topicarea_id=A.id and A.id=:topicarea_id and M.visible=TRUE")
     result = db.session.execute(sql, {"topicarea_id":topicarea_id})
     return result.fetchone()[0]
+
+def search_messages(query,topic_id):
+    sql = ("SELECT created_at, topics_id, U.username, content FROM messages M, Users U "
+               "WHERE M.user_id=U.id and content LIKE :query and topics_id=:topic_id "
+               "and M.visible=TRUE")
+    result = db.session.execute(sql, {"query":"%"+query+"%","topic_id":topic_id})
+    return result.fetchall()    
