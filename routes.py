@@ -146,7 +146,7 @@ def add_newtopic(topicarea_id):
             if utils.validate_topic(name):
                 if utils.validate_message(message_content):                
                     user_id = users.user_id()
-                    topic_id = messages.add_newtopic (topicarea_id, user_id,name, message_content)
+                    topic_id = messages.add_newtopic (topicarea_id, user_id, name, message_content)
                     return redirect("/"+str(topicarea_id)+"/"+str(topic_id))
                 else:
                     flash("Sallittu viestin koko on 3-200 merkkiä","error")
@@ -215,6 +215,7 @@ def edit_topic(topicarea_id,topic_id):
 
 @app.route("/<int:topicarea_id>/<int:topic_id>/<int:message_id>", methods = ["POST"])
 def delete_message (topicarea_id,topic_id,message_id):
+    '''deletes message'''
     try:
         if session["csrf_token"] != request.form["csrf_token"]:            
                     abort(403) 
@@ -226,11 +227,13 @@ def delete_message (topicarea_id,topic_id,message_id):
 
 @app.route("/<int:topicarea_id>/<int:topic_id>/<int:message_id>/edit", methods = ["GET"])
 def view_edit_message (topicarea_id,topic_id,message_id):
+    '''shows page for editing message'''
     content = messages.get_messagecontent(message_id)
     return render_template("editmessage.html", topicareaid = topicarea_id,topicid = topic_id, messageid = message_id, content = content)
 
 @app.route("/<int:topicarea_id>/<int:topic_id>/<int:message_id>/edit", methods = ["POST"])
 def edit_message (topicarea_id,topic_id,message_id):
+    '''handles form for editing message'''
     try:
         if session["csrf_token"] != request.form["csrf_token"]:            
                     abort(403) 
@@ -250,13 +253,9 @@ def result(topicarea_id,topic_id):
     '''search function'''
     try:
         query = request.args["query"]
-        sql = ("SELECT created_at, topics_id, U.username, content FROM messages M, Users U "
-               "WHERE M.user_id=U.id and content LIKE :query and topics_id=:topic_id "
-               "and M.visible=TRUE")
-        result = db.session.execute(sql, {"query":"%"+query+"%","topic_id":topic_id})
-        messages = result.fetchall()
-        return render_template("result.html", messages=messages,
-                               topicareaid=topicarea_id, topicid=topic_id)
+        messagelist = messages.search_messages(query, topic_id)
+        return render_template("result.html", messages = messagelist,
+                               topicareaid = topicarea_id, topicid = topic_id)
     except:
         return "Not allowed"
 
