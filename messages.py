@@ -183,3 +183,5 @@ def search_messages(query,topic_id):
                "and M.visible=TRUE")
     result = db.session.execute(sql, {"query":"%"+query+"%","topic_id":topic_id})
     return result.fetchall()    
+
+    
