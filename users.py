@@ -58,11 +58,13 @@ def add_puser(user_id):
     db.session.commit()
 
 def remove_puser(user_id):
+    '''deletes priviledged user'''
     sql = "UPDATE users SET access_level = 'user' where id=:user_id"
     db.session.execute(sql, {"user_id":user_id})
     db.session.commit()
 
 def users():
+    '''get users'''
     sql = "SELECT username, access_level, id from USERS where access_level = 'user'"
     list = db.session.execute(sql).fetchall()
     return list

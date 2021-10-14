@@ -6,16 +6,15 @@ Tietokantojen harjoitustyö HY 2021/Keskustelusovellus:
 
 Sovelluksessa näkyy keskustelualueita, joista jokaisella on tietty aihe. Alueilla on keskusteluketjuja, jotka muodostuvat viesteistä. Jokainen käyttäjä on peruskäyttäjä tai ylläpitäjä.
 
-
 Heroku:
 
 https://tsoha2021vuorenmaa.herokuapp.com/
 
 Testaamista varten: 
 
--Tavalliseksi käyttäjäksi kirjaudu ja luo tunnukset
--Admintunnukset: Admin2, password:tsoha21 (voit muuttaa luomasi tunnusten oikeuksia admin-käyttäjänä).
--Valmiit priviledged user -tunnukset: Oxygen, password:rantapallo.
+Tavalliseksi käyttäjäksi kirjaudu ja luo tunnukset.
+Admintunnukset: Admin2, password:tsoha21 (voit muuttaa luomasi tunnusten oikeuksia admin-käyttäjänä).
+Valmiit priviledged user -tunnukset: Oxygen, password:rantapallo.
 
 
 - [x] Käyttäjä voi kirjautua sisään ja ulos sekä rekisteröityä ja luoda uuden tunnuksen.

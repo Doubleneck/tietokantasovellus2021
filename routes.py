@@ -133,7 +133,7 @@ def view_topics(topicarea_id):
 
 @app.route("/<int:topicarea_id>/newtopic", methods = ["GET","POST"])
 def add_newtopic(topicarea_id):
-    '''new topic = title for chain of messages'''
+    '''add new topic = title for chain of messages & first message'''
     try:
         if request.method == "GET":
             return render_template("newtopic.html", topicareaid = topicarea_id)
