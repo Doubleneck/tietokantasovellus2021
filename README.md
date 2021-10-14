@@ -1,6 +1,6 @@
 # tietokantasovellus2021
 In this project I´m gonna build up a simple bulletin board.
-I´m doing this for a database course at Helsinki University.
+I´m doing this for a database course at Helsinki University 2021.
 
 Tietokantojen harjoitustyö HY 2021/Keskustelusovellus:
 
