@@ -17,6 +17,7 @@ Testaamista varten:
 -Admintunnukset: Admin2, password:tsoha21 (voit muuttaa luomasi tunnusten oikeuksia admin-käyttäjänä).
 -Valmiit priviledged user -tunnukset: Oxygen, password:rantapallo.
 
+
 - [x] Käyttäjä voi kirjautua sisään ja ulos sekä rekisteröityä ja luoda uuden tunnuksen.
 - [x] Käyttäjä näkee sovelluksen etusivulla listan alueista sekä jokaisen alueen ketjujen ja viestien määrän ja viimeksi lähetetyn viestin ajankohdan.
 - [x] Käyttäjä voi luoda alueelle uuden ketjun antamalla ketjun otsikon ja aloitusviestin sisällön.
@@ -33,3 +34,4 @@ Testaamista varten:
 - [x] syötteentarkistukset: username, password, message, topic (=message chain title)
 - [x] ulkoasu
 - [x] tietoturva: CSRF 
+- [x] Kolmannen välipalautuksen fixit tehty
