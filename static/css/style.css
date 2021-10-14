@@ -14,7 +14,6 @@ nav li {
     border-radius: .5em;
     margin: .2em;  
 }
-
 nav li a {
     text-decoration: none;
     color: rgb(255, 255, 255);
@@ -35,14 +34,12 @@ input[type=button], input[type=submit], input[type=reset] {
     border-radius: .5em;
     margin: .2em; 
     color: rgb(255, 255, 255);  
-  }
-  
+}  
 form {
     border-radius: .5em;
     padding: 1 em;
     float: right;    
 }
-
 .error {
     color: red
 }
