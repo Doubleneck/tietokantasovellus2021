@@ -4,12 +4,12 @@ import users
 
 def get_topicareas():
     '''for starting page: counts for messages,chains and lastmessagetime in non-secret topicarea'''
-    result = db.session.execute("SELECT id , name FROM topicareas where "
-                                "visible=True and secret=False")
-    topicareas = result.fetchall()
-    list = []
-    for t in topicareas:
-        list.append((t[0],t[1],count_messages(t[0]),count_chains(t[0]),last_messagetime(t[0])))
+    result = db.session.execute("SELECT id, name, (SELECT count (*) from topics T where T.topicarea_id = topicareas.id and T.visible =TRUE)"
+                                ", (SELECT count(*) from messages M , topics T where M.topics_id=T.id and T.topicarea_id = topicareas.id "
+                                " and T.visible =TRUE and M.visible=TRUE), (SELECT created_at from messages M , "
+                                "topics T where M.topics_id=T.id and T.topicarea_id = topicareas.id and T.visible =TRUE "
+                                "and M.visible=TRUE ORDER BY CREATED_AT DESC LIMIT 1) FROM topicareas where visible=True and secret=False")
+    list = result.fetchall()    
     return list
 
 def add_newtopicarea(topicarea_name):
@@ -20,12 +20,13 @@ def add_newtopicarea(topicarea_name):
 
 def get_secrettopicareas():
     '''for starting page: counts for messages,chains and lastmessagetime in secret topicarea'''
-    result = db.session.execute("SELECT id , name FROM topicareas where "
-                                "visible=True and secret=True")
-    topicareas = result.fetchall()
     list = []
-    for t in topicareas:
-        list.append((t[0],t[1],count_messages(t[0]),count_chains(t[0]),last_messagetime(t[0])))
+    result = db.session.execute("SELECT id, name, (SELECT count (*) from topics T where T.topicarea_id = topicareas.id and T.visible =TRUE)"
+                                ", (SELECT count(*) from messages M , topics T where M.topics_id=T.id and T.topicarea_id = topicareas.id "
+                                " and T.visible =TRUE and M.visible=TRUE), (SELECT created_at from messages M , "
+                                "topics T where M.topics_id=T.id and T.topicarea_id = topicareas.id and T.visible =TRUE "
+                                "and M.visible=TRUE ORDER BY CREATED_AT DESC LIMIT 1) FROM topicareas where visible=True and secret=TRUE")   
+    list = result.fetchall()
     return list
 
 def add_secrettopicarea(topicarea_name):
